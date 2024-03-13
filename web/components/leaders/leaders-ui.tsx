@@ -218,7 +218,6 @@ export function DepositCard() {
 
       <CardFooter className="space-x-2">
         <button
-          variant="outline"
           className="w-full text-red-500 hover:bg-red-700"
           disabled={
             amount === 0 ||
@@ -233,7 +232,6 @@ export function DepositCard() {
           <ArrowDown className="mr-2 h-4 w-4" /> Deposit
         </button>
         <button
-          variant="outline"
           className="w-full text-green-500 hover:bg-green-700"
           disabled={
             amount === 0 ||
