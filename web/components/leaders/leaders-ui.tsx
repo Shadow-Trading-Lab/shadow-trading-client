@@ -289,66 +289,73 @@ export function LeaderCard({name, pnl30, mdd30, aum}: {name: string, pnl30: numb
   </>)
 }
 
+type Leader = {
+  name: string;
+  aum: number;
+  mdd30: number;
+  pnl30: number; // Allow pnl30 to be either string or number
+};
+
 export function LeaderCardList(){
-  const leaders = [
+  const leaders: Leader[] = [
     {
       name: 'Jack',
       aum: 588800,
-      mdd30: '16.8',
-      pnl30: '10045'
+      mdd30: 16.8,
+      pnl30: 10045
     },
     {
       name: 'Amy',
       aum: 188800,
-      mdd30: '18.8',
-      pnl30: '10045'
+      mdd30: 18.8,
+      pnl30: 10045
     },
     {
       name: 'Tom',
       aum: 388800,
-      mdd30: '58.8',
-      pnl30: '10045'
+      mdd30: 58.8,
+      pnl30: 10045
   },
     {
       name: 'Jack',
       aum: 588800,
-      mdd30: '16.8',
-      pnl30: '10045'
+      mdd30: 16.8,
+      pnl30: 10045
     },
     {
       name: 'Amy',
       aum: 188800,
-      mdd30: '18.8',
-      pnl30: '10045'
+      mdd30: 18.8,
+      pnl30: 10045
     },
     {
       name: 'Tom',
       aum: 388800,
-      mdd30: '58.8',
-      pnl30: '10045'
+      mdd30: 58.8,
+      pnl30: 10045
   },
     {
       name: 'Jack',
       aum: 588800,
-      mdd30: '16.8',
-      pnl30: '10045'
+      mdd30: 16.8,
+      pnl30: 10045
     },
     {
       name: 'Amy',
       aum: 188800,
-      mdd30: '18.8',
-      pnl30: '10045'
+      mdd30: 18.8,
+      pnl30: 10045
     },
     {
       name: 'Tom',
       aum: 388800,
-      mdd30: '58.8',
-      pnl30: '10045'
+      mdd30: 58.8,
+      pnl30: 10045
   },
 ]
   return <div className="py-16">
     <div className="flex flex-wrap justify-center gap-x-8 gap-y-12">
-      {leaders.map(el => <LeaderCard key={el} {...el} />)}
+      {leaders.map(el => <LeaderCard key={el.name} {...el} />)}
     </div>
   </div>
 }
