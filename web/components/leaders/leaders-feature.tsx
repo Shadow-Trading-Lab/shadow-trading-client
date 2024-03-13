@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react'
-import {DepositCard} from '@/components/leaders/leaders-ui'
+import { LeaderCardList} from '@/components/leaders/leaders-ui'
 
 const LeadersFeature = () => {
   return (
-    <div>LeadersFeature
-
-      <DepositCard />
+    <div>
+      <h2>Leaders</h2>
+      <LeaderCardList />
     </div>
   )
 }
