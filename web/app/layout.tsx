@@ -13,6 +13,7 @@ const links: { label: string; path: string }[] = [
   { label: 'Account', path: '/account' },
   { label: 'Clusters', path: '/clusters' },
   { label: 'TeamShadow Program', path: '/team-shadow' },
+  { label: 'Leaders', path: '/leaders' },
 ];
 
 export default function RootLayout({
