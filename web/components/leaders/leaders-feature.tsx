@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react'
-import { LeaderCardList} from '@/components/leaders/leaders-ui'
+import { PageTitle, LeaderCardList} from '@/components/leaders/leaders-ui'
 
 const LeadersFeature = () => {
   return (
-    <div>
-      <h2>Leaders</h2>
+    <div className="px-4 pt-4 md:px-8">
+      <PageTitle />
       <LeaderCardList />
     </div>
   )

@@ -348,7 +348,7 @@ export function LeaderCardList(){
       pnl30: '10045'
   },
 ]
-  return <div className="px-12 py-16">
+  return <div className="py-16">
     <div className="flex flex-wrap justify-center gap-x-8 gap-y-12">
       {leaders.map(el => <LeaderCard key={el} {...el} />)}
     </div>
@@ -391,4 +391,12 @@ const xLabels = [
       <MarkPlot />
     </ChartContainer>
   );
+}
+
+export function PageTitle(){
+  return <div className="max-w-lg px-8 pt-12">
+  <h2 className="text-white-800 text-5xl font-bold">
+    Leaders
+  </h2>
+</div>
 }
