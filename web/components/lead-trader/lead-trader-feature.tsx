@@ -1,13 +1,16 @@
 'use client';
 
 import React from 'react'
-import { PageTitle, LeaderCardList, BeATraderButton} from '@/components/lead-trader/lead-trader-ui'
+import { PageTitle, LeaderCardList, AlertSuccess, SearchInput} from '@/components/lead-trader/lead-trader-ui'
 
 const LeadersFeature = () => {
   return (
     <div className="px-4 pt-4 md:px-8">
-      <BeATraderButton />
-      <PageTitle />
+      <AlertSuccess msg="Team member has been added successfully." />
+      <div className='pt-12 flex justify-between'>
+        <PageTitle />
+        <SearchInput />
+      </div>
       <LeaderCardList />
     </div>
   )

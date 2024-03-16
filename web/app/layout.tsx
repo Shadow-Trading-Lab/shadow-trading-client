@@ -2,6 +2,7 @@ import './global.css';
 import { UiLayout } from '@/components/ui/ui-layout';
 import { ClusterProvider } from '@/components/cluster/cluster-data-access';
 import { SolanaProvider } from '@/components/solana/solana-provider';
+import {AppProvider} from '@/providers/app-provider'
 import { ReactQueryProvider } from './react-query-provider';
 
 export const metadata = {
@@ -27,7 +28,9 @@ export default function RootLayout({
         <ReactQueryProvider>
           <ClusterProvider>
             <SolanaProvider>
+              <AppProvider>
                 <UiLayout links={links}>{children}</UiLayout>
+              </AppProvider>
             </SolanaProvider>
           </ClusterProvider>
         </ReactQueryProvider>
