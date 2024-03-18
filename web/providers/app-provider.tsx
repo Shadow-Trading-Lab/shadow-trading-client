@@ -1,3 +1,5 @@
+'use client'
+
 import  { createContext } from 'react';
 import {AlertProvider} from '@/providers/alert-provider'
 

@@ -6,6 +6,35 @@
       "name": "greet",
       "accounts": [],
       "args": []
+    },
+    {
+      "name": "hello",
+      "accounts": [],
+      "args": []
+    },
+    {
+      "name": "createSystemAccount",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "newAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
-  ]
+  ],
+  "metadata": {
+    "address": "EkyqFDzVC7xSzXaFtZvBck1ALLta9qyHxcVcjXPnSmHp"
+  }
 }
