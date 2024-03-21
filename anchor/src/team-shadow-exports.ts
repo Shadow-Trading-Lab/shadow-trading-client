@@ -8,5 +8,5 @@ export { TeamShadow, TeamShadowIDL };
 
 // After updating your program ID (e.g. after running `anchor keys sync`) update the value below.
 export const programId = new PublicKey(
-  'EkyqFDzVC7xSzXaFtZvBck1ALLta9qyHxcVcjXPnSmHp'
+  '9Dsye73YYuJQitEAXhJoiZUYwJiagFnE7moPTXCMCjd2'
 );

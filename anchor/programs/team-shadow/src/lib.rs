@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{create_account, CreateAccount};
 
-declare_id!("EkyqFDzVC7xSzXaFtZvBck1ALLta9qyHxcVcjXPnSmHp");
+declare_id!("9Dsye73YYuJQitEAXhJoiZUYwJiagFnE7moPTXCMCjd2");
 
 #[program]
 pub mod team_shadow {

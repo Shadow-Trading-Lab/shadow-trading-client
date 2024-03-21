@@ -5,7 +5,7 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-team_shadow = "EkyqFDzVC7xSzXaFtZvBck1ALLta9qyHxcVcjXPnSmHp"
+team_shadow = "9Dsye73YYuJQitEAXhJoiZUYwJiagFnE7moPTXCMCjd2"
 
 [registry]
 url = "https://api.apr.dev"
