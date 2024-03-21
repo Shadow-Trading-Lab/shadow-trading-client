@@ -113,7 +113,7 @@ export function LeaderCardList(){
 ]
   return <div className="py-16">
     <div className="flex flex-wrap justify-center gap-x-8 gap-y-12">
-      {leaders.map(el => <LeaderCard key={el.name} {...el} />)}
+      {leaders.map((el, i) => <LeaderCard key={`${i} ${el.name}`} {...el} />)}
     </div>
   </div>
 }
