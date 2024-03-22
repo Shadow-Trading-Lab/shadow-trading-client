@@ -3,25 +3,23 @@ export type TeamShadow = {
   "name": "team_shadow",
   "instructions": [
     {
-      "name": "greet",
-      "accounts": [],
-      "args": []
-    },
-    {
-      "name": "hello",
-      "accounts": [],
-      "args": []
-    },
-    {
-      "name": "createSystemAccount",
+      "name": "deposit",
       "accounts": [
         {
-          "name": "payer",
+          "name": "userVaultAccount",
           "isMut": true,
-          "isSigner": true
+          "isSigner": false,
+          "docs": [
+            "by the signer, ensuring it has the correct ownership and permissions."
+          ]
         },
         {
-          "name": "newAccount",
+          "name": "userInteractionsCounter",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
           "isMut": true,
           "isSigner": true
         },
@@ -31,7 +29,64 @@ export type TeamShadow = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "accounts": [
+        {
+          "name": "userVaultAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "by the signer, ensuring it has the correct ownership and permissions."
+          ]
+        },
+        {
+          "name": "userInteractionsCounter",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "userInteractions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "totalDeposits",
+            "type": "u64"
+          },
+          {
+            "name": "totalWithdrawals",
+            "type": "u64"
+          }
+        ]
+      }
     }
   ]
 };
@@ -41,25 +96,23 @@ export const IDL: TeamShadow = {
   "name": "team_shadow",
   "instructions": [
     {
-      "name": "greet",
-      "accounts": [],
-      "args": []
-    },
-    {
-      "name": "hello",
-      "accounts": [],
-      "args": []
-    },
-    {
-      "name": "createSystemAccount",
+      "name": "deposit",
       "accounts": [
         {
-          "name": "payer",
+          "name": "userVaultAccount",
           "isMut": true,
-          "isSigner": true
+          "isSigner": false,
+          "docs": [
+            "by the signer, ensuring it has the correct ownership and permissions."
+          ]
         },
         {
-          "name": "newAccount",
+          "name": "userInteractionsCounter",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
           "isMut": true,
           "isSigner": true
         },
@@ -69,7 +122,64 @@ export const IDL: TeamShadow = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "accounts": [
+        {
+          "name": "userVaultAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "by the signer, ensuring it has the correct ownership and permissions."
+          ]
+        },
+        {
+          "name": "userInteractionsCounter",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "userInteractions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "totalDeposits",
+            "type": "u64"
+          },
+          {
+            "name": "totalWithdrawals",
+            "type": "u64"
+          }
+        ]
+      }
     }
   ]
 };

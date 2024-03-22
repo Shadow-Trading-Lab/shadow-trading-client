@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-use anchor_lang::system_program::{create_account, CreateAccount};
+use anchor_lang::system_program;
 
 declare_id!("9Dsye73YYuJQitEAXhJoiZUYwJiagFnE7moPTXCMCjd2");
 
@@ -7,59 +7,74 @@ declare_id!("9Dsye73YYuJQitEAXhJoiZUYwJiagFnE7moPTXCMCjd2");
 pub mod team_shadow {
     use super::*;
 
-    pub fn greet(_ctx: Context<Initialize>) -> Result<()> {
-        msg!("GM!");
-        Ok(())
-    }
-
-    pub fn hello(_ctx: Context<Hello>) -> Result<()> {
-        msg!("Hello, Solana!");
-
-        msg!("Our program's Program ID: {}", &id());
-
-        Ok(())
-    }
-
-    pub fn create_system_account(ctx: Context<CreateSystemAccount>) -> Result<()> {
-        msg!("Program invoked. Creating a system account...");
-        msg!(
-            "  New public key will be: {}",
-            &ctx.accounts.new_account.key().to_string()
-        );
-
-        let lamports=(Rent::get()?).minimum_balance(0);
-
-        create_account(
+    pub fn deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
+        system_program::transfer(
             CpiContext::new(
                 ctx.accounts.system_program.to_account_info(),
-                CreateAccount{
-                    from: ctx.accounts.payer.to_account_info(),
-                    to: ctx.accounts.new_account.to_account_info()
-                }
-            ), 
-            lamports,
-            0, 
-            &ctx.accounts.system_program.key()
+                system_program::Transfer {
+                    from: ctx.accounts.signer.to_account_info(),
+                    to: ctx.accounts.user_vault_account.to_account_info(),
+                },
+            ),
+            amount,
         )?;
 
-        msg!("Account created succesfully.");
+        ctx.accounts.user_interactions_counter.total_deposits += 1;
+
+        Ok(())
+    }
+
+    pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
+        let bump = *ctx.bumps.get("user_vault_account").unwrap();
+
+        let ix = anchor_lang::solana_program::system_instruction::transfer(
+            &ctx.accounts.user_vault_account.key(),
+            &ctx.accounts.signer.key(),
+            amount,
+        );
+        anchor_lang::solana_program::program::invoke_signed(
+            &ix,
+            &[
+                ctx.accounts.user_vault_account.to_account_info(),
+                ctx.accounts.signer.to_account_info(),
+            ],
+            &[&[b"vault", ctx.accounts.signer.key().as_ref(), &[bump]]],
+        )?;
+
+        ctx.accounts.user_interactions_counter.total_withdrawals += 1;
 
         Ok(())
     }
 }
 
 #[derive(Accounts)]
-pub struct Initialize {}
-
-#[derive(Accounts)]
-pub struct Hello {}
-
-#[derive(Accounts)]
-pub struct CreateSystemAccount<'info> {
+pub struct Deposit<'info> {
+    /// CHECK: `user_vault_account` is safe because it is created and initialized
+    /// by the signer, ensuring it has the correct ownership and permissions.
+    #[account(mut, seeds=[b"vault", signer.key().as_ref()], bump)]
+    pub user_vault_account: AccountInfo<'info>,
+    #[account(init_if_needed, space = 16 + 8, seeds=[b"counter", signer.key().as_ref()], bump, payer = signer)]
+    pub user_interactions_counter: Account<'info, UserInteractions>,
     #[account(mut)]
-    pub payer: Signer<'info>,
-    #[account(mut)]
-    pub new_account: Signer<'info>,
+    pub signer: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
 
+#[derive(Accounts)]
+pub struct Withdraw<'info> {
+    /// CHECK: `user_vault_account` is safe because it is created and initialized
+    /// by the signer, ensuring it has the correct ownership and permissions.
+    #[account(mut, seeds=[b"vault", signer.key().as_ref()], bump)]
+    pub user_vault_account: AccountInfo<'info>,
+    #[account(mut, seeds=[b"counter", signer.key().as_ref()], bump)]
+    pub user_interactions_counter: Account<'info, UserInteractions>,
+    #[account(mut)]
+    pub signer: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[account]
+pub struct UserInteractions {
+    total_deposits: u64,
+    total_withdrawals: u64,
+}
