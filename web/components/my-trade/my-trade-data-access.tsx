@@ -18,20 +18,6 @@ export function useTeamShadowProgram() {
   const provider = useAnchorProvider();
   const program = new Program(TeamShadowIDL, programId, provider);
 
-  const getProgramAccount = useQuery({
-    queryKey: ['get-program-account', { cluster }],
-    queryFn: () => connection.getParsedAccountInfo(programId),
-  });
-
-  const greet = useMutation({
-    mutationKey: ['teamShadow', 'greet', { cluster }],
-    mutationFn: (keypair: Keypair) => program.methods.greet().rpc(),
-    onSuccess: (signature) => {
-      transactionToast(signature);
-    },
-    onError: () => toast.error('Failed to run program'),
-  });
-
   const deposit = useMutation({
     mutationKey: ['teamShadow', 'deposit', { cluster }],
     mutationFn: (keypair: Keypair, amount: number) => {
@@ -47,9 +33,9 @@ export function useTeamShadowProgram() {
         program.programId
       )[0];
 
-      console.log(userVaultAccount, totalInteractionsAccount)
+    //   console.log(userVaultAccount, totalInteractionsAccount)
       
-      program.methods.deposit().accounts({})
+    //   program.methods.deposit().accounts({})
     },
     onSuccess: (signature) => {
       transactionToast(signature);
@@ -57,19 +43,9 @@ export function useTeamShadowProgram() {
     onError: () => toast.error('Failed to run program'),
   });
 
-  // const leaderAccounts = useQuery({
-  //   queryKey: ['teamShadow', 'leader-accounts', {cluster}],
-  //   queryFn: () => {
-  //     console.log(program)
-  //     }
-  // })
-
   return {
     program,
     programId,
-    getProgramAccount,
-    greet,
     deposit,
-    // leaderAccounts
   };
 }

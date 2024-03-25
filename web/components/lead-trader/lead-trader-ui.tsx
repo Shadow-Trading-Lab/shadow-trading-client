@@ -4,6 +4,8 @@ import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
+import { useTeamShadowProgram } from '../team-shadow/team-shadow-data-access';
+// import { useLeaderAccounts } from './lead-trader-data-access';
 
 
 export function LeaderCard({name, pnl30, mdd30, aum, address}: {name: string, pnl30: number, mdd30: number, aum: number, address: string}) {
@@ -46,6 +48,7 @@ type Leader = {
 };
 
 export function LeaderCardList(){
+  // const leaderAccounts = useLeaderAccounts()
   const leaders: Leader[] = [
     {
       name: 'Jack',
@@ -175,24 +178,10 @@ export function BeATraderButton(){
 }
 
 export function CopyTrade({address}: {address: string}){
-  const [copyState, setCopyState] = useState(false);
-  const URLLink = "https://example.lorem/shortlink";
-  const handleCopy = () => {
-    navigator.clipboard.writeText(URLLink).then(
-      function () {
-        setCopyState(true);
-      },
-      function (err) {
-        console.error("Async: Could not copy text: ", err);
-      }
-    );
-  };
-
-  useEffect(() => {
-    if (copyState) {
-      setTimeout(() => setCopyState(false), 3000);
-    }
-  }, [copyState]);
+  const [amount, setAmount] = useState(0);
+  const {} = useTeamShadowProgram()
+  const handleCopyTrade = () => {
+  }
 
   return (
     <Dialog.Root>
@@ -232,25 +221,28 @@ export function CopyTrade({address}: {address: string}){
                   </span>
                   <input
                       type="number"
+                      value={amount}
+                      onChange={e => setAmount(e.target.value)}
                       placeholder="0.00"
                       className="w-full pl-8 pr-16 py-2 appearance-none bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   />
                   <div className="absolute inset-y-0 right-3 flex items-center">
                       <select className="text-sm bg-transparent outline-none px-1 rounded-lg h-full">
-                          <option>USDT</option>
-                          <option>USDC</option>
+                          <option>SOL</option>
                       </select>
                   </div>
               </div>
             </div>
-            <button className="px-7 py-3.5 text-white bg-indigo-300 cursor-not-allowed rounded-lg">
-              Copy
-            </button>
-            <Dialog.Close asChild>
-              <button className="text-sm mt-3 py-2.5 px-8 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2">
+            {amount>0?
+              <Dialog.Close asChild>
+                <button className="text-sm mt-3 py-2.5 px-8 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2">
+                  Copy
+                </button>
+              </Dialog.Close>:
+              <button className="px-7 py-3.5 text-white bg-indigo-300 cursor-not-allowed rounded-lg">
                 Copy
               </button>
-            </Dialog.Close>
+            }
           </div>
         </Dialog.Content>
       </Dialog.Portal>

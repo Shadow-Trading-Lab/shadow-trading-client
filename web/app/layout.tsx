@@ -13,8 +13,9 @@ export const metadata = {
 const links: { label: string; path: string }[] = [
   // { label: 'Account', path: '/account' },
   // { label: 'Clusters', path: '/clusters' },
-  { label: 'TeamShadow Program', path: '/team-shadow' },
+  // { label: 'TeamShadow Program', path: '/team-shadow' },
   { label: 'Lead Trader', path: '/lead-trader' },
+  { label: 'My Trade', path: '/my-trade' },
 ];
 
 export default function RootLayout({
