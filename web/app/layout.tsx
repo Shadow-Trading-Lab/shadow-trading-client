@@ -16,6 +16,8 @@ const links: { label: string; path: string }[] = [
   // { label: 'TeamShadow Program', path: '/team-shadow' },
   { label: 'Lead Trader', path: '/lead-trader' },
   { label: 'My Trade', path: '/my-trade' },
+  { label: 'Staking STL', path: '/staking-stl' },
+  { label: 'Swap STL', path: '/swap-stl' },
 ];
 
 export default function RootLayout({
