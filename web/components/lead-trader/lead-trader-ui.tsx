@@ -5,7 +5,7 @@ import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { useTeamShadowProgram } from '../team-shadow/team-shadow-data-access';
-// import { useLeaderAccounts } from './lead-trader-data-access';
+import { useLeaderAccounts } from './lead-trader-data-access';
 
 
 export function LeaderCard({name, pnl30, mdd30, aum, address}: {name: string, pnl30: number, mdd30: number, aum: number, address: string}) {
@@ -47,77 +47,90 @@ type Leader = {
   address: string;
 };
 
-export function LeaderCardList(){
-  // const leaderAccounts = useLeaderAccounts()
-  const leaders: Leader[] = [
-    {
-      name: 'Jack',
-      aum: 588800,
-      mdd30: 16.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-    },
-    {
-      name: 'Amy',
-      aum: 188800,
-      mdd30: 18.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-    },
-    {
-      name: 'Tom',
-      aum: 388800,
-      mdd30: 58.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+const leaders: Leader[] = [
+  {
+    name: 'Jack',
+    aum: 588800,
+    mdd30: 16.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
   },
-    {
-      name: 'Jack',
-      aum: 588800,
-      mdd30: 16.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-    },
-    {
-      name: 'Amy',
-      aum: 188800,
-      mdd30: 18.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-    },
-    {
-      name: 'Tom',
-      aum: 388800,
-      mdd30: 58.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+  {
+    name: 'Amy',
+    aum: 188800,
+    mdd30: 18.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
   },
-    {
-      name: 'Jack',
-      aum: 588800,
-      mdd30: 16.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-    },
-    {
-      name: 'Amy',
-      aum: 188800,
-      mdd30: 18.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-    },
-    {
-      name: 'Tom',
-      aum: 388800,
-      mdd30: 58.8,
-      pnl30: 10045,
-      address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+  {
+    name: 'Tom',
+    aum: 388800,
+    mdd30: 58.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+},
+  {
+    name: 'Jack',
+    aum: 588800,
+    mdd30: 16.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
   },
+  {
+    name: 'Amy',
+    aum: 188800,
+    mdd30: 18.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+  },
+  {
+    name: 'Tom',
+    aum: 388800,
+    mdd30: 58.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+},
+  {
+    name: 'Jack',
+    aum: 588800,
+    mdd30: 16.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+  },
+  {
+    name: 'Amy',
+    aum: 188800,
+    mdd30: 18.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+  },
+  {
+    name: 'Tom',
+    aum: 388800,
+    mdd30: 58.8,
+    pnl30: 10045,
+    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
+},
 ]
+
+export function LeaderCardList(){
+  // const {data, isLoading} = useLeaderAccounts()
+  // console.log(data)
+  
   return <div className="py-16">
+    {/* {isLoading? <>Loading...</>:  */}
     <div className="flex flex-wrap justify-center gap-x-8 gap-y-12">
+      {/* {data?.map(el => <li key={`${el.publicKey}`}>{el.publicKey?.toBase58()} 
+        <li>
+          {el.publicKey.toBase58()}
+        </li>
+        <li>
+          {Number(el.account?.totalDeposits)}
+        </li>
+      </li>)} */}
       {leaders.map((el, i) => <LeaderCard key={`${i} ${el.name}`} {...el} />)}
     </div>
+    {/* } */}
   </div>
 }
 

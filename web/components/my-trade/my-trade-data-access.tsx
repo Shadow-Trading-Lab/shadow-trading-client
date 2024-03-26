@@ -1,7 +1,7 @@
 'use client';
 
 import { programId, TeamShadowIDL } from '@team-shadow/anchor';
-import { Program, web3 } from '@coral-xyz/anchor';
+import { Program, web3, BN } from '@coral-xyz/anchor';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { Keypair } from '@solana/web3.js';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -20,27 +20,39 @@ export function useTeamShadowProgram() {
 
   const deposit = useMutation({
     mutationKey: ['teamShadow', 'deposit', { cluster }],
-    mutationFn: (keypair: Keypair, amount: number) => {
-      // 算userVaultAccount 的 PDA
-      const userVaultAccount = web3.PublicKey.findProgramAddressSync(
+    mutationFn: async (amount: number) => {
+        // 算userVaultAccount 的 PDA
+        const userVaultAccount = web3.PublicKey.findProgramAddressSync(
         [Buffer.from("vault"), provider.wallet.publicKey.toBuffer()],
         program.programId
-      )[0];
+        )[0];
 
-      // 算userVaultAccount 的 PDA
-      const totalInteractionsAccount = web3.PublicKey.findProgramAddressSync(
+        // 算userVaultAccount 的 PDA
+        const totalInteractionsAccount = web3.PublicKey.findProgramAddressSync(
         [Buffer.from("counter"), provider.wallet.publicKey.toBuffer()],
         program.programId
-      )[0];
+        )[0];
 
-    //   console.log(userVaultAccount, totalInteractionsAccount)
-      
-    //   program.methods.deposit().accounts({})
+        console.log(userVaultAccount.toBase58(), totalInteractionsAccount.toBase58())
+        
+        const tx = await program.methods
+            .deposit(new BN(amount * 10 ** 9))
+            .accounts({
+                userVaultAccount,
+                userInteractionsCounter: totalInteractionsAccount,
+                signer: wallet.publicKey?.toBase58(),
+                systemProgram: web3.SystemProgram.programId
+            })
+            .rpc()
+
+        console.log(tx)
     },
     onSuccess: (signature) => {
       transactionToast(signature);
     },
-    onError: () => toast.error('Failed to run program'),
+    onError: (msg) => {
+        console.log(msg)
+        toast.error('Failed to run program')},
   });
 
   return {

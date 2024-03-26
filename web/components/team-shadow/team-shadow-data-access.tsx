@@ -13,9 +13,9 @@ import { useTransactionToast } from '../ui/ui-layout';
 export function useTeamShadowProgram() {
   const { connection } = useConnection();
   const { cluster } = useCluster();
-  const wallet = useWallet();
   const transactionToast = useTransactionToast();
   const provider = useAnchorProvider();
+  const wallet = useWallet()
   const program = new Program(TeamShadowIDL, programId, provider);
 
   const getProgramAccount = useQuery({
@@ -34,7 +34,7 @@ export function useTeamShadowProgram() {
 
   const deposit = useMutation({
     mutationKey: ['teamShadow', 'deposit', { cluster }],
-    mutationFn: (keypair: Keypair, amount: number) => {
+    mutationFn: async (amount: number) => {
       // 算userVaultAccount 的 PDA
       const userVaultAccount = web3.PublicKey.findProgramAddressSync(
         [Buffer.from("vault"), provider.wallet.publicKey.toBuffer()],
@@ -49,7 +49,14 @@ export function useTeamShadowProgram() {
 
       console.log(userVaultAccount, totalInteractionsAccount)
       
-      program.methods.deposit().accounts({})
+      const tx = await program.methods.deposit(amount).accounts({
+        userVaultAccount,
+        userInteractionsCounter: totalInteractionsAccount,
+        signer: wallet.publicKey?.toBase58(),
+        systemProgram: web3.SystemProgram.programId
+      })
+
+      console.log(tx)
     },
     onSuccess: (signature) => {
       transactionToast(signature);

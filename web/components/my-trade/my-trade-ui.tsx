@@ -13,7 +13,7 @@ export function CreateLeaderTradeVault(){
     const [amount, setAmount] = useState(0);
     const {deposit} = useTeamShadowProgram()
     const handleCopyTrade = async () => {
-        await deposit.mutateAsync(amount)
+        await deposit.mutate(amount)
     }
   
     return (

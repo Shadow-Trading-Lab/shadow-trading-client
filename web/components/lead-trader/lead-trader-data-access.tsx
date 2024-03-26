@@ -1,19 +1,17 @@
 'use client';
 
-import { useConnection } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
+import { programId, TeamShadowIDL } from '@team-shadow/anchor';
+import { Program } from '@coral-xyz/anchor';
 import { useQuery } from "@tanstack/react-query";
-import { programId } from "@team-shadow/anchor";
+import { useAnchorProvider } from '../solana/solana-provider';
 
 export function useLeaderAccounts() {
-    const { connection } = useConnection();
-  
+    const provider = useAnchorProvider();
+    const program = new Program(TeamShadowIDL, programId, provider);
+
     return useQuery({
-        queryKey: ['teamShadow', 'leader-accounts', 'cluster'],
-        queryFn: async () => {
-            
-            const info = await connection.getAccountInfo(programId)
-            // console.log(info)
-          }
-      })
-  }
+      queryKey: ['test-count', 'all'],
+      queryFn: () => program.account.userInteractions.all(),
+    });
+}
+
