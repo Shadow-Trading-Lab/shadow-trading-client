@@ -46,8 +46,9 @@ export function useTeamShadowProgram() {
             .rpc()
 
         console.log(tx)
+        return tx
     },
-    onSuccess: (signature) => {
+    onSuccess: (signature: string) => {
       transactionToast(signature);
     },
     onError: (msg) => {

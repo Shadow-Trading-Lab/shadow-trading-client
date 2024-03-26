@@ -18,65 +18,9 @@ export function useTeamShadowProgram() {
   const wallet = useWallet()
   const program = new Program(TeamShadowIDL, programId, provider);
 
-  const getProgramAccount = useQuery({
-    queryKey: ['get-program-account', { cluster }],
-    queryFn: () => connection.getParsedAccountInfo(programId),
-  });
-
-  const greet = useMutation({
-    mutationKey: ['teamShadow', 'greet', { cluster }],
-    mutationFn: (keypair: Keypair) => program.methods.greet().rpc(),
-    onSuccess: (signature) => {
-      transactionToast(signature);
-    },
-    onError: () => toast.error('Failed to run program'),
-  });
-
-  const deposit = useMutation({
-    mutationKey: ['teamShadow', 'deposit', { cluster }],
-    mutationFn: async (amount: number) => {
-      // 算userVaultAccount 的 PDA
-      const userVaultAccount = web3.PublicKey.findProgramAddressSync(
-        [Buffer.from("vault"), provider.wallet.publicKey.toBuffer()],
-        program.programId
-      )[0];
-
-      // 算userVaultAccount 的 PDA
-      const totalInteractionsAccount = web3.PublicKey.findProgramAddressSync(
-        [Buffer.from("counter"), provider.wallet.publicKey.toBuffer()],
-        program.programId
-      )[0];
-
-      console.log(userVaultAccount, totalInteractionsAccount)
-      
-      const tx = await program.methods.deposit(amount).accounts({
-        userVaultAccount,
-        userInteractionsCounter: totalInteractionsAccount,
-        signer: wallet.publicKey?.toBase58(),
-        systemProgram: web3.SystemProgram.programId
-      })
-
-      console.log(tx)
-    },
-    onSuccess: (signature) => {
-      transactionToast(signature);
-    },
-    onError: () => toast.error('Failed to run program'),
-  });
-
-  // const leaderAccounts = useQuery({
-  //   queryKey: ['teamShadow', 'leader-accounts', {cluster}],
-  //   queryFn: () => {
-  //     console.log(program)
-  //     }
-  // })
 
   return {
     program,
     programId,
-    getProgramAccount,
-    greet,
-    deposit,
-    // leaderAccounts
   };
 }
