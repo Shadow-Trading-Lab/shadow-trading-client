@@ -20,41 +20,67 @@ export function useTeamShadowProgram() {
     const userVaultAccount = usePDA("vault")
     const totalInteractionsAccount = usePDA("counter")
 
-  const deposit = useMutation({
-    mutationKey: ['teamShadow', 'deposit', { cluster }],
-    mutationFn: async (amount: number) => {
-        const tx = await program.methods
-            .deposit(new BN(amount * 10 ** 9))
-            .accounts({
-                userVaultAccount,
-                userInteractionsCounter: totalInteractionsAccount,
-                signer: wallet.publicKey?.toBase58(),
-                systemProgram: web3.SystemProgram.programId
-            })
-            .rpc()
+    const deposit = useMutation({
+        mutationKey: ['teamShadow', 'deposit', { cluster }],
+        mutationFn: async (amount: number) => {
+            const tx = await program.methods
+                .deposit(new BN(amount * 10 ** 9))
+                .accounts({
+                    userVaultAccount,
+                    userInteractionsCounter: totalInteractionsAccount,
+                    signer: wallet.publicKey?.toBase58(),
+                    systemProgram: web3.SystemProgram.programId
+                })
+                .rpc()
 
-        console.log(tx)
-        return tx
-    },
-    onSuccess: (signature: string) => {
-      transactionToast(signature);
-    },
-    onError: (msg) => {
-        console.error(msg)
-        toast.error('Failed to run program')},
-  });
+            console.log(tx)
+            return tx
+        },
+        onSuccess: (signature: string) => {
+            transactionToast(signature);
+        },
+        onError: (msg) => {
+            console.error(msg)
+            toast.error('Failed to run program')
+        },
+    });
 
-  return {
-    program,
-    programId,
-    deposit,
-  };
+    const withdraw = useMutation({
+        mutationKey: ['teamShadow', 'withdraw', { cluster }],
+        mutationFn: async (amount: number) => {
+            const tx = await program.methods
+                .withdraw(new BN(amount * 10 ** 9))
+                .accounts({
+                    userVaultAccount,
+                    userInteractionsCounter: totalInteractionsAccount,
+                    signer: wallet.publicKey?.toBase58(),
+                    systemProgram: web3.SystemProgram.programId
+                })
+                .rpc()
+
+            console.log(tx)
+            return tx
+        },
+        onSuccess: (signature: string) => {
+            transactionToast(signature);
+        },
+        onError: (msg) => {
+            console.error(msg)
+            toast.error('Failed to withdraw')
+        },
+    })
+
+    return {
+        program,
+        programId,
+        deposit,
+        withdraw
+    };
 }
 
 export function usePDA(data: string){
     const provider = useAnchorProvider();
     const program = new Program(TeamShadowIDL, programId, provider);
-
     const pda = useMemo(() => {
         if(!provider.wallet.publicKey) return undefined
         return web3.PublicKey.findProgramAddressSync(
@@ -68,9 +94,8 @@ export function usePDA(data: string){
 
 export function useAccountInfo(address: PublicKey | undefined) {
     const {connection} = useConnection()
-
     return useQuery({
         queryKey: ['account-info', address],
-        queryFn: async() => address && connection.getAccountInfo(address),
+        queryFn: () => address? connection.getAccountInfo(address):null,
     })
 }
