@@ -5,9 +5,9 @@ type AlertContextType = null
 export const AlertContext = createContext<AlertContextType>(null)
 
 
-export const AlertProvider = ({ children }) => {
+export const AlertProvider = ({ children }: {children: any}) => {
     return (
-       <AlertContext.Provider value={{}}>
+       <AlertContext.Provider value={null}>
             {children}
         </AlertContext.Provider>
     );
