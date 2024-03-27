@@ -1,29 +1,30 @@
 'use client';
 
-import { Keypair } from '@solana/web3.js';
-import { useTeamShadowProgram } from './team-shadow-data-access';
+// import { Keypair } from '@solana/web3.js';
+// import { useTeamShadowProgram } from './team-shadow-data-access';
 
 export function TeamShadowCreate() {
-  const { greet } = useTeamShadowProgram();
+  // const { greet } = useTeamShadowProgram();
 
   return (
     <button
       className="btn btn-xs lg:btn-md btn-primary"
-      onClick={() => greet.mutateAsync(Keypair.generate())}
-      disabled={greet.isPending}
+      // onClick={() => greet.mutateAsync(Keypair.generate())}
+      // disabled={greet.isPending}
     >
-      Run program{greet.isPending && '...'}
+      {/* Run program{greet.isPending && '...'} */}
+      Run program
     </button>
   );
 }
 
 export function TeamShadowProgram() {
-  const { getProgramAccount } = useTeamShadowProgram();
+  // const { getProgramAccount } = useTeamShadowProgram();
 
-  if (getProgramAccount.isLoading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
-  }
-  if (!getProgramAccount.data?.value) {
+  // if (getProgramAccount.isLoading) {
+  //   return <span className="loading loading-spinner loading-lg"></span>;
+  // }
+  // if (!getProgramAccount.data?.value) {
     return (
       <div className="alert alert-info flex justify-center">
         <span>
@@ -32,10 +33,10 @@ export function TeamShadowProgram() {
         </span>
       </div>
     );
-  }
-  return (
-    <div className={'space-y-6'}>
-      <pre>{JSON.stringify(getProgramAccount.data.value, null, 2)}</pre>
-    </div>
-  );
+  // }
+  // return (
+  //   <div className={'space-y-6'}>
+  //     <pre>{JSON.stringify(getProgramAccount.data.value, null, 2)}</pre>
+  //   </div>
+  // );
 }
