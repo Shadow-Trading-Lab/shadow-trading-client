@@ -32,8 +32,9 @@ export function UiLayout({
             <img
               className="h-4 md:h-6"
               alt="Solana Logo"
-              src="/solana-logo.png"
+              src="/stl-logo.png"
             />
+            <h1 className='px-2'>Shadow Trading</h1>
           </Link>
           <ul className="menu menu-horizontal px-1 space-x-2">
             {links.map(({ label, path }) => (
