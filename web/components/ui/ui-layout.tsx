@@ -8,6 +8,7 @@ import { ReactNode, Suspense, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import StlLogoImg from '@/public/stl-logo.png'
 import { AccountChecker } from '../account/account-ui';
 import {
   ClusterChecker,
@@ -35,7 +36,7 @@ export function UiLayout({
               height={44}
               className=""
               alt="Solana Logo"
-              src="/stl-logo.png"
+              src={StlLogoImg}
             />
             <h1 className='px-2'>Shadow Trading</h1>
           </Link>
