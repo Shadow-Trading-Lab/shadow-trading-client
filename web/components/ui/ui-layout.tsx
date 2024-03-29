@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { WalletButton } from '../solana/solana-provider';
 import * as React from 'react';
 import { ReactNode, Suspense, useEffect, useRef } from 'react';
@@ -29,8 +30,10 @@ export function UiLayout({
       <div className="navbar bg-base-300 text-neutral-content flex-col md:flex-row space-y-2 md:space-y-0">
         <div className="flex-1">
           <Link className="btn btn-ghost normal-case text-xl" href="/">
-            <img
-              className="h-4 md:h-6"
+            <Image
+              width={44}
+              height={44}
+              className=""
               alt="Solana Logo"
               src="/stl-logo.png"
             />
