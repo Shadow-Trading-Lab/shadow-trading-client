@@ -8,7 +8,7 @@ import { ReactNode, Suspense, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import StlLogoImg from '@/public/stl-logo.png'
+import StlLogoImg from '@/public/STL-logo.png'
 import { AccountChecker } from '../account/account-ui';
 import {
   ClusterChecker,
