@@ -42,13 +42,13 @@ export function CreateLeaderTradeVault({account}:{account: PublicKey | undefined
             Deposit
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 w-full h-full bg-black opacity-40" />
-          <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-3xl mx-auto px-4">
+        <Dialog.Overlay className="data-[state=open]:animate-overlayShow fixed inset-0 w-full h-full bg-black opacity-40" />
+        <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-lg mx-auto px-4">
             <div className="rounded-md shadow-lg px-4 py-6 bg-white border border-gray-200 dark:border-gray-800 dark:bg-gray-700">
-              <div className="flex items-center justify-between">
-                <Dialog.Title className="text-lg font-medium text-gray-800 dark:text-white">
+              <div className="flex items-center justify-end">
+                {/* <Dialog.Title className="text-lg font-medium text-gray-800 dark:text-white">
                   Trader Vault
-                </Dialog.Title>
+                </Dialog.Title> */}
                 <Dialog.Close className="p-2 text-gray-400 rounded-md hover:bg-gray-100">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -64,11 +64,12 @@ export function CreateLeaderTradeVault({account}:{account: PublicKey | undefined
                   </svg>
                 </Dialog.Close>
               </div>
-              <div>
-                {/* <label className="text-gray-600 dark:text-white">
-                    Copy Amount
-                </label> */}
-                <div className="relative mt-2 max-w-xs text-gray-500">
+              {/* <div> */}
+              <div className="max-w-sm mx-auto space-y-3 text-center ">
+                <Dialog.Title className="text-lg font-medium text-gray-800 dark:text-white ">
+                  Trader Vault
+                </Dialog.Title>
+                <div className="relative mt-4 w-full text-gray-500">
                     <span className="h-6 text-gray-400 absolute left-3 inset-y-0 my-auto">
                         &#x24;
                     </span>
@@ -87,16 +88,16 @@ export function CreateLeaderTradeVault({account}:{account: PublicKey | undefined
                 </div>
               </div>
               <div>
-                <div className='mt-4'>
+                <div className='max-w-sm mx-auto mt-4'>
                   {amount>0?
                     <Dialog.Close asChild>
                       <button
                         onClick={handleCopyTrade}
-                        className="text-sm mt-3 py-2.5 px-8 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2">
+                        className="w-full mt-3 py-2.5 px-8 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2">
                         Deposit
                       </button>
                     </Dialog.Close>:
-                    <button className="px-7 py-3.5 text-white bg-indigo-300 cursor-not-allowed rounded-lg">
+                    <button className="w-full mt-3 py-2.5 px-8 text-white bg-indigo-300 cursor-not-allowed rounded-lg">
                       Deposit
                     </button>
                   }
