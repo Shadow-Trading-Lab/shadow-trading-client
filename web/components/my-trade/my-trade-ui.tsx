@@ -2,7 +2,8 @@
 
 import {useState} from 'react'
 import * as Dialog from "@radix-ui/react-dialog";
-import { useAccountInfo, usePDA, useTeamShadowProgram } from './my-trade-data-access';
+import { usePDA, useTeamShadowProgram } from './my-trade-data-access';
+import { PublicKey } from '@solana/web3.js';
 
 
 export function PageTitle() {
@@ -11,23 +12,26 @@ export function PageTitle() {
 
 export function LeaderTradeContent() {
   const userVaultAccount = usePDA("vault")
-  const {data, isLoading} = useAccountInfo(userVaultAccount)
+  const {accountInfo} = useTeamShadowProgram({account: userVaultAccount})
+
+  if(accountInfo.isLoading) {
+    return <section>
+      <>Loading...</>
+    </section>
+  }
 
   return <section>
-    {isLoading? 
-      <>Loading...</>: 
       <div>
         <h3 className='dark:text-white text-3xl font-bold'>Vault</h3>
-        <p>Address: {userVaultAccount?.toBase58()} <CreateLeaderTradeVault /> <LeaderTradeWithdraw /> </p>
-        <p>Balance: {data?.lamports? data?.lamports / 10 ** 9:0 } SOL</p>
+        <p>Address: {userVaultAccount?.toBase58()} <CreateLeaderTradeVault account={userVaultAccount} /> <LeaderTradeWithdraw account={userVaultAccount} /> </p>
+        <p>Balance: {accountInfo.data?.lamports? accountInfo.data?.lamports / 10 ** 9:0 } SOL</p>
       </div>
-    }
   </section>
 }
 
-export function CreateLeaderTradeVault() {
+export function CreateLeaderTradeVault({account}:{account: PublicKey | undefined}) {
     const [amount, setAmount] = useState(0);
-    const {deposit} = useTeamShadowProgram()
+    const {deposit} = useTeamShadowProgram({account})
     const handleCopyTrade = async () => {
         await deposit.mutate(amount)
     }
@@ -105,9 +109,9 @@ export function CreateLeaderTradeVault() {
     );
   };
 
-export function LeaderTradeWithdraw() {
+export function LeaderTradeWithdraw({account}:{account: PublicKey | undefined}) {
     const [amount, setAmount] = useState(0);
-    const {withdraw} = useTeamShadowProgram()
+    const {withdraw} = useTeamShadowProgram({account})
     const handleCopyTrade = async () => {
         await withdraw.mutate(amount)
     }

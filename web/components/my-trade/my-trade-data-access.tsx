@@ -11,14 +11,23 @@ import { useAnchorProvider } from '../solana/solana-provider';
 import { useTransactionToast } from '../ui/ui-layout';
 import { useMemo } from 'react';
 
-export function useTeamShadowProgram() {
+export function useTeamShadowProgram({
+    account,
+  }: {
+    account: PublicKey | undefined;
+  }) {
+    const {connection} = useConnection()
     const { cluster } = useCluster();
     const wallet = useWallet();
     const transactionToast = useTransactionToast();
     const provider = useAnchorProvider();
     const program = new Program(TeamShadowIDL, programId, provider);
-    const userVaultAccount = usePDA("vault")
     const totalInteractionsAccount = usePDA("counter")
+
+    const accountInfo = useQuery({
+        queryKey: ['account-info', 'accountInfo', { cluster }],
+        queryFn: () => account? connection.getAccountInfo(account):null,
+    })
 
     const deposit = useMutation({
         mutationKey: ['teamShadow', 'deposit', { cluster }],
@@ -26,7 +35,7 @@ export function useTeamShadowProgram() {
             const tx = await program.methods
                 .deposit(new BN(amount * 10 ** 9))
                 .accounts({
-                    userVaultAccount,
+                    userVaultAccount: account,
                     userInteractionsCounter: totalInteractionsAccount,
                     signer: wallet.publicKey?.toBase58(),
                     systemProgram: web3.SystemProgram.programId
@@ -38,6 +47,7 @@ export function useTeamShadowProgram() {
         },
         onSuccess: (signature: string) => {
             transactionToast(signature);
+            accountInfo.refetch();
         },
         onError: (msg) => {
             console.error(msg)
@@ -51,7 +61,7 @@ export function useTeamShadowProgram() {
             const tx = await program.methods
                 .withdraw(new BN(amount * 10 ** 9))
                 .accounts({
-                    userVaultAccount,
+                    userVaultAccount: account   ,
                     userInteractionsCounter: totalInteractionsAccount,
                     signer: wallet.publicKey?.toBase58(),
                     systemProgram: web3.SystemProgram.programId
@@ -63,6 +73,7 @@ export function useTeamShadowProgram() {
         },
         onSuccess: (signature: string) => {
             transactionToast(signature);
+            accountInfo.refetch();
         },
         onError: (msg) => {
             console.error(msg)
@@ -73,6 +84,7 @@ export function useTeamShadowProgram() {
     return {
         program,
         programId,
+        accountInfo,
         deposit,
         withdraw
     };
@@ -90,12 +102,4 @@ export function usePDA(data: string){
     }, [provider])
 
     return pda
-}
-
-export function useAccountInfo(address: PublicKey | undefined) {
-    const {connection} = useConnection()
-    return useQuery({
-        queryKey: ['account-info', address],
-        queryFn: () => address? connection.getAccountInfo(address):null,
-    })
 }
