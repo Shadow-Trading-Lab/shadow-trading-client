@@ -307,3 +307,19 @@ export function AlertSuccess({msg}: {msg: string}) {
       </div>
   )
 }
+
+export function ApplyLeadTrader() {
+    return (
+      <div className="alert alert-warning bg-gray-300 text-warning-content/80 rounded-none flex justify-center">
+        <span>
+          <strong>Be a Lead Trader, enjoy 10% profit share!</strong> 
+        </span>
+        <button
+          className="px-5 py-3 text-white duration-150 bg-indigo-600 rounded-lg hover:bg-indigo-700 active:shadow-lg"
+          onClick={() =>{}}
+        >
+          Apply Now
+        </button>
+      </div>
+    );
+}

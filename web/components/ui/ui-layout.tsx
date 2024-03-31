@@ -58,9 +58,9 @@ export function UiLayout({
           <ClusterUiSelect />
         </div>
       </div>
-      <ClusterChecker>
-        <AccountChecker />
-      </ClusterChecker>
+        {/* <ClusterChecker>
+          <AccountChecker />
+        </ClusterChecker> */}
       <div className="flex-grow mx-4 lg:mx-auto">
         <Suspense
           fallback={
