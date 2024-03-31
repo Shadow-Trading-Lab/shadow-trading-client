@@ -262,11 +262,9 @@ export function CopyTrade({name}: {name: string}){
               {amount>0?
                 <Dialog.Close asChild>
                   <button className="w-full mt-2 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
-                  {/* <button className="text-sm mt-3 py-2.5 px-8 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"> */}
                     Copy
                   </button>
                 </Dialog.Close>:
-                // <button className="w-full mt-2 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
                 <button className="w-full px-4 py-2 text-white bg-indigo-300 cursor-not-allowed rounded-lg">
                   Copy
                 </button>
