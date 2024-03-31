@@ -314,12 +314,97 @@ export function ApplyLeadTrader() {
         <span>
           <strong>Be a Lead Trader, enjoy 10% profit share!</strong> 
         </span>
-        <button
-          className="px-5 py-3 text-white duration-150 bg-indigo-600 rounded-lg hover:bg-indigo-700 active:shadow-lg"
-          onClick={() =>{}}
-        >
-          Apply Now
-        </button>
+        <ApplyLeadTraderButton />
       </div>
     );
 }
+
+
+export function ApplyLeadTraderButton(){
+  const [amount, setAmount] = useState<number>(0);
+
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger className="px-5 py-3 text-white duration-150 bg-indigo-600 rounded-lg hover:bg-indigo-700 active:shadow-lg">
+        Apply Now
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 w-full h-full bg-black opacity-40" />
+        <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-3xl mx-auto px-4">
+          <div className="rounded-md shadow-lg px-4 py-6 bg-white border border-gray-200 dark:border-gray-800 dark:bg-gray-700">
+            <div className="flex items-center justify-between">
+              <Dialog.Title className="mb-4 text-3xl font-medium text-gray-800 dark:text-white">
+                Apply Lead Trader
+              </Dialog.Title>
+              <Dialog.Close className="p-2 text-gray-400 rounded-md hover:bg-gray-100">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 mx-auto"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Dialog.Close>
+            </div>
+            <div>
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                className="space-y-5">
+                <div>
+                    <label className="font-medium">
+                        Name
+                    </label>
+                    <input
+                        type="text"
+                        required
+                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-white border-gray-400 border-2 shadow-sm rounded-lg"
+                    />
+                </div>
+                <div>
+                    <label className="font-medium">
+                        Describe
+                    </label>
+                    <textarea
+                        required
+                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-white border-gray-400 border-2 shadow-sm rounded-lg"
+                    />
+                </div>
+                <div>
+                    <label className="font-medium">
+                        Amount
+                    </label>
+                    <input    
+                        type="number"
+                        placeholder='Minimum 3000 USDC'
+                        required
+                        className="w-full mt-2  px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-white border-gray-400 border-2 shadow-sm rounded-lg"
+                    />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2 mb-4">
+                      <input id="default-checkbox" type="checkbox" value="" required className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                      <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium dark:text-gray-300">I have read and agreed to the User Service Agreement</label>
+                  </div>
+                </div>
+                <div>
+                  <Dialog.Close asChild>
+                    <button
+                        className="w-full mt-2 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                    >
+                        Apply
+                    </button>
+                  </Dialog.Close> 
+                </div>
+              </form>
+            </div>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+};
