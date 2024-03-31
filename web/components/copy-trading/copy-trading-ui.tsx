@@ -7,7 +7,7 @@ import { useTeamShadowProgram } from '../team-shadow/team-shadow-data-access';
 import { useLeaderAccounts } from './copy-trading-data-access';
 
 
-export function LeaderCard({name, pnl30, mdd30, aum, address}: {name: string, pnl30: number, mdd30: number, aum: number, address: string}) {
+export function LeaderCard({name, pnl30, mdd30, aum}: {name: string, pnl30: number, mdd30: number, aum: number}) {
   return <div className="relative group overflow-hidden p-8 rounded-xl bg-white border border-gray-200 dark:border-gray-800 dark:bg-gray-700">
     <div aria-hidden="true" className="inset-0 absolute aspect-video border rounded-full -translate-y-1/2 group-hover:-translate-y-1/4 duration-300 bg-gradient-to-b from-green-500 to-white dark:from-white dark:to-white blur-2xl opacity-25 dark:opacity-5 dark:group-hover:opacity-10"></div>
     <div className="relative">
@@ -32,7 +32,7 @@ export function LeaderCard({name, pnl30, mdd30, aum, address}: {name: string, pn
           </div>
         </div>
         <div className="w-full">
-          <CopyTrade address={address} />
+          <CopyTrade name={name} />
         </div>
     </div>
   </div>
@@ -189,11 +189,8 @@ export function BeATraderButton(){
   </div>
 }
 
-export function CopyTrade({address}: {address: string}){
+export function CopyTrade({name}: {name: string}){
   const [amount, setAmount] = useState<number>(0);
-  const {} = useTeamShadowProgram()
-  const handleCopyTrade = () => {
-  }
 
   return (
     <Dialog.Root>
@@ -202,11 +199,11 @@ export function CopyTrade({address}: {address: string}){
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 w-full h-full bg-black opacity-40" />
-        <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-3xl mx-auto px-4">
+        <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-xl mx-auto px-4">
           <div className="rounded-md shadow-lg px-4 py-6 bg-white border border-gray-200 dark:border-gray-800 dark:bg-gray-700">
             <div className="flex items-center justify-between">
-              <Dialog.Title className="text-lg font-medium text-gray-800 dark:text-white">
-                Copy Trader {address}
+              <Dialog.Title className="text-2xl mb-5 font-medium text-gray-800 dark:text-white">
+                Copy {name}
               </Dialog.Title>
               <Dialog.Close className="p-2 text-gray-400 rounded-md hover:bg-gray-100">
                 <svg
@@ -223,11 +220,14 @@ export function CopyTrade({address}: {address: string}){
                 </svg>
               </Dialog.Close>
             </div>
-            <div>
-              <label className="text-gray-600 dark:text-white">
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="mb-5 space-y-5">
+              <div>
+                <label className="font-medium">
                   Copy Amount
-              </label>
-              <div className="relative mt-2 max-w-xs text-gray-500">
+                </label>
+                <div className="relative mt-2 max-w-full text-gray-500">
                   <span className="h-6 text-gray-400 absolute left-3 inset-y-0 my-auto">
                       &#x24;
                   </span>
@@ -240,21 +240,38 @@ export function CopyTrade({address}: {address: string}){
                   />
                   <div className="absolute inset-y-0 right-3 flex items-center">
                       <select className="text-sm bg-transparent outline-none px-1 rounded-lg h-full">
-                          <option>SOL</option>
+                          <option>USDT</option>
                       </select>
-                  </div>
+                  </div>        
+                </div>  
               </div>
-            </div>
-            {amount>0?
-              <Dialog.Close asChild>
-                <button className="text-sm mt-3 py-2.5 px-8 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2">
+              <div>
+                <div className="flex items-center space-x-2 mb-4">
+                    <input id="default-checkbox" type="checkbox" required className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                    <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium dark:text-gray-300">Agree to a revenue sharing rate of 10%</label>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center space-x-2 mb-4">
+                    <input id="default-checkbox" type="checkbox" required className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                    <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium dark:text-gray-300">I have read and agreed to the User Service Agreement</label>
+                </div>
+              </div>
+            </form>
+            <div>
+              {amount>0?
+                <Dialog.Close asChild>
+                  <button className="w-full mt-2 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
+                  {/* <button className="text-sm mt-3 py-2.5 px-8 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"> */}
+                    Copy
+                  </button>
+                </Dialog.Close>:
+                // <button className="w-full mt-2 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
+                <button className="w-full px-4 py-2 text-white bg-indigo-300 cursor-not-allowed rounded-lg">
                   Copy
                 </button>
-              </Dialog.Close>:
-              <button className="px-7 py-3.5 text-white bg-indigo-300 cursor-not-allowed rounded-lg">
-                Copy
-              </button>
-            }
+              }
+            </div>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
@@ -381,13 +398,15 @@ export function ApplyLeadTraderButton(){
                     <input    
                         type="number"
                         placeholder='Minimum 1000 USDT'
+                        value={amount}
+                        onChange={e => setAmount(+e.target.value)}
                         required
                         className="w-full mt-2  px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-white border-gray-400 border-2 shadow-sm rounded-lg"
                     />
                 </div>
                 <div>
                   <div className="flex items-center space-x-2 mb-4">
-                      <input id="default-checkbox" type="checkbox" value="" required className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                      <input id="default-checkbox" type="checkbox" required className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                       <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium dark:text-gray-300">I have read and agreed to the User Service Agreement</label>
                   </div>
                 </div>
