@@ -4,7 +4,7 @@ import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { useTeamShadowProgram } from '../team-shadow/team-shadow-data-access';
-import { useLeaderAccounts } from './lead-trader-data-access';
+import { useLeaderAccounts } from './copy-trading-data-access';
 
 
 export function LeaderCard({name, pnl30, mdd30, aum, address}: {name: string, pnl30: number, mdd30: number, aum: number, address: string}) {

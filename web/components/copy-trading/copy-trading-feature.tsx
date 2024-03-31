@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react'
-import { PageTitle, LeaderCardList, SearchInput} from '@/components/lead-trader/lead-trader-ui'
+import { PageTitle, LeaderCardList, SearchInput} from '@/components/copy-trading/copy-trading-ui'
 
 const LeadersFeature = () => {
   return (

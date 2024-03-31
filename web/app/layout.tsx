@@ -14,7 +14,7 @@ const links: { label: string; path: string }[] = [
   { label: 'Account', path: '/account' },
   // { label: 'Clusters', path: '/clusters' },
   // { label: 'TeamShadow Program', path: '/team-shadow' },
-  { label: 'Lead Trader', path: '/lead-trader' },
+  { label: 'Copy Trading', path: '/copy-trading' },
   { label: 'My Trade', path: '/my-trade' },
   { label: 'Staking STL', path: '/staking-stl' },
   { label: 'Swap STL', path: '/swap-stl' },
