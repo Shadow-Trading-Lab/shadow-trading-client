@@ -380,7 +380,7 @@ export function ApplyLeadTraderButton(){
                     </label>
                     <input    
                         type="number"
-                        placeholder='Minimum 3000 USDC'
+                        placeholder='Minimum 1000 USDT'
                         required
                         className="w-full mt-2  px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-white border-gray-400 border-2 shadow-sm rounded-lg"
                     />
