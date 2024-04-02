@@ -2,12 +2,19 @@ import { ChartContainer } from '@mui/x-charts';
 import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { useEffect, useState } from "react";
-import { useTeamShadowProgram } from './copy-trading-data-access';
-import { useLeaderAccounts } from './copy-trading-data-access';
+import { useMemo, useState } from "react";
+import { useTeamShadowProgram, useTeamShadowProgramAccount } from './copy-trading-data-access';
+import { PublicKey } from '@solana/web3.js';
 
 
-export function LeaderCard({name, pnl30, mdd30, aum}: {name: string, pnl30: number, mdd30: number, aum: number}) {
+export function LeaderCard({account}: {account: PublicKey}) {
+  const {accountQuery} = useTeamShadowProgramAccount({account})
+
+  // const data = useMemo(() => accountQuery.data, [accountQuery.data])
+  // console.log(data)
+
+  const name = useMemo(() => accountQuery.data?.name, [accountQuery.data?.name])
+
   return <div className="relative group overflow-hidden p-8 rounded-xl bg-white border border-gray-200 dark:border-gray-800 dark:bg-gray-700">
     <div aria-hidden="true" className="inset-0 absolute aspect-video border rounded-full -translate-y-1/2 group-hover:-translate-y-1/4 duration-300 bg-gradient-to-b from-green-500 to-white dark:from-white dark:to-white blur-2xl opacity-25 dark:opacity-5 dark:group-hover:opacity-10"></div>
     <div className="relative">
@@ -20,116 +27,37 @@ export function LeaderCard({name, pnl30, mdd30, aum}: {name: string, pnl30: numb
         <div className="mt-6 pb-6 flex justify-between gap-16">
           <div>
             <div>30 MDD</div>
-            <div className="font-semibold text-white">{mdd30} %</div>
+            <div className="font-semibold text-white">{16.8} %</div>
           </div>
           <div>
             <div>30 Pnl</div>
-            <div className="font-semibold text-white">{pnl30}</div>
+            <div className="font-semibold text-white">{10045}</div>
           </div>
           <div>
             <div>AUM</div>
-            <div className="font-semibold text-white">{aum}</div>
+            <div className="font-semibold text-white">{588800}</div>
           </div>
         </div>
         <div className="w-full">
-          <CopyTrade name={name} />
+          {name && <CopyTrade name={'name'} />}
         </div>
     </div>
   </div>
 }
 
-type Leader = {
-  name: string;
-  aum: number;
-  mdd30: number;
-  pnl30: number; // Allow pnl30 to be either string or number
-  address: string;
-};
-
-const leaders: Leader[] = [
-  {
-    name: 'Jack',
-    aum: 588800,
-    mdd30: 16.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-  },
-  {
-    name: 'Amy',
-    aum: 188800,
-    mdd30: 18.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-  },
-  {
-    name: 'Tom',
-    aum: 388800,
-    mdd30: 58.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-},
-  {
-    name: 'Jack',
-    aum: 588800,
-    mdd30: 16.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-  },
-  {
-    name: 'Amy',
-    aum: 188800,
-    mdd30: 18.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-  },
-  {
-    name: 'Tom',
-    aum: 388800,
-    mdd30: 58.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-},
-  {
-    name: 'Jack',
-    aum: 588800,
-    mdd30: 16.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-  },
-  {
-    name: 'Amy',
-    aum: 188800,
-    mdd30: 18.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-  },
-  {
-    name: 'Tom',
-    aum: 388800,
-    mdd30: 58.8,
-    pnl30: 10045,
-    address: '8MnEryqP6avszGZVB8oN5XiYa7RUjVqdA5vddKRHJtHT'
-},
-]
-
 export function LeaderCardList(){
-  const {data, isLoading} = useLeaderAccounts()
-  console.log(data)
+  const {accounts} = useTeamShadowProgram()
+
   
   return <div className="py-16">
-    {isLoading? <>Loading...</>: 
+    {accounts.isLoading? <>Loading...</>: 
     <div className="flex flex-wrap justify-center gap-x-8 gap-y-12">
-      {/* {data?.map(el => <li key={`${el.publicKey}`}>{el.publicKey?.toBase58()} 
-        <li>
-          {el.publicKey.toBase58()}
-        </li>
-        <li>
-          {Number(el.account?.totalDeposits)}
-        </li>
-      </li>)} */}
-      {leaders.map((el, i) => <LeaderCard key={`${i} ${el.name}`} {...el} />)}
-    </div>
-    }
+      {accounts.data?.map((el, i) => 
+        <LeaderCard 
+          key={el.publicKey.toString()} 
+          account={el.publicKey} />
+      )}
+    </div>}
   </div>
 }
 
@@ -325,7 +253,7 @@ export function AlertSuccess({msg}: {msg: string}) {
 
 export function ApplyLeadTrader() {
     return (
-      <div className="alert alert-warning bg-gray-300 text-warning-content/80 rounded-none flex justify-center">
+      <div className="alert alert-warnings bg-gray-300 text-warning-content/80 rounded-none flex justify-center">
         <span>
           <strong>Be a Lead Trader, enjoy 10% profit share!</strong> 
         </span>

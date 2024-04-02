@@ -11,20 +11,7 @@ import { useAnchorProvider } from '../solana/solana-provider';
 import { useTransactionToast } from '../ui/ui-layout';
 import { useMemo } from 'react';
 
-
-export function useLeaderAccounts() {
-    const provider = useAnchorProvider();
-    const program = new Program(TeamShadowIDL, programId, provider);
-
-    return useQuery({
-      queryKey: ['test-count', 'all'],
-      queryFn: () => program.account.userInteractions.all(),
-    });
-}
-
-
 export function useTeamShadowProgram() {
-  const {connection} = useConnection()
   const { cluster } = useCluster();
   const wallet = useWallet();
   const transactionToast = useTransactionToast();
@@ -33,10 +20,14 @@ export function useTeamShadowProgram() {
   const userInteractionsCounter = usePDA("counter")
   const userVaultAccount = usePDA("vault")
 
+  const accounts = useQuery({
+    queryKey: ['team-shadow', 'all', { cluster }],
+    queryFn: () => program.account.userInteractions.all(),
+  });
+
   const initialize = useMutation({
-      mutationKey: ['teamShadow', 'initialize', { cluster }],
+      mutationKey: ['team-shadow', 'initialize', { cluster }],
       mutationFn: async ({name, amount}:{name: string, amount: number}) => {
-          console.log(name, amount)
           const tx = await program.methods
               .initialize(name, new BN(amount * 10 ** 9))
               .accounts({
@@ -52,6 +43,7 @@ export function useTeamShadowProgram() {
       },
       onSuccess: (signature: string) => {
           transactionToast(signature);
+          accounts.refetch()
       },
       onError: (msg) => {
           console.error(msg)
@@ -62,6 +54,7 @@ export function useTeamShadowProgram() {
   return {
       program,
       programId,
+      accounts,
       initialize,
   };
 }
@@ -78,4 +71,25 @@ export function usePDA(data: string){
   }, [provider])
 
   return pda
+}
+
+
+export function useTeamShadowProgramAccount({
+  account,
+}: {
+  account: PublicKey;
+}) {
+  const { cluster } = useCluster();
+  const transactionToast = useTransactionToast();
+  const { program } = useTeamShadowProgram();
+
+  const accountQuery = useQuery({
+    queryKey: ['team-shadow', 'fetch', { cluster, account }],
+    queryFn: () => program.account.userInteractions.fetch(account),
+  });
+
+
+  return {
+    accountQuery,
+  };
 }

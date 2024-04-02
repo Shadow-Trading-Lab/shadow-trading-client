@@ -11,7 +11,7 @@ team_shadow = "CG7Dq53EJdheZ4PKRe18CmXxsAdpxAGWCYK6hL7fem3b"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "localnet"
+cluster = "https://purple-cool-dust.solana-devnet.quiknode.pro/5cd01a591208226412ccbf7024aa19f503bfe9e9/"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
