@@ -3,7 +3,7 @@ export type TeamShadow = {
   "name": "team_shadow",
   "instructions": [
     {
-      "name": "deposit",
+      "name": "initialize",
       "accounts": [
         {
           "name": "userVaultAccount",
@@ -16,6 +16,44 @@ export type TeamShadow = {
         {
           "name": "userInteractionsCounter",
           "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "accounts": [
+        {
+          "name": "userVaultAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "by the signer, ensuring it has the correct ownership and permissions."
+          ]
+        },
+        {
+          "name": "userInteractionsCounter",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -77,6 +115,10 @@ export type TeamShadow = {
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
           {
             "name": "totalDeposits",
             "type": "u64"
@@ -96,7 +138,7 @@ export const IDL: TeamShadow = {
   "name": "team_shadow",
   "instructions": [
     {
-      "name": "deposit",
+      "name": "initialize",
       "accounts": [
         {
           "name": "userVaultAccount",
@@ -109,6 +151,44 @@ export const IDL: TeamShadow = {
         {
           "name": "userInteractionsCounter",
           "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "accounts": [
+        {
+          "name": "userVaultAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "by the signer, ensuring it has the correct ownership and permissions."
+          ]
+        },
+        {
+          "name": "userInteractionsCounter",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -170,6 +250,10 @@ export const IDL: TeamShadow = {
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
           {
             "name": "totalDeposits",
             "type": "u64"

@@ -5,13 +5,13 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-team_shadow = "2QUW4EifLKjApSuTuSX26VmfnVdQHRDRkUt1HsfbouE8"
+team_shadow = "CG7Dq53EJdheZ4PKRe18CmXxsAdpxAGWCYK6hL7fem3b"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "https://purple-cool-dust.solana-devnet.quiknode.pro/5cd01a591208226412ccbf7024aa19f503bfe9e9/"
+cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

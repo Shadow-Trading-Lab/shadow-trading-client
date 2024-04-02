@@ -3,7 +3,7 @@
   "name": "team_shadow",
   "instructions": [
     {
-      "name": "deposit",
+      "name": "initialize",
       "accounts": [
         {
           "name": "userVaultAccount",
@@ -16,6 +16,44 @@
         {
           "name": "userInteractionsCounter",
           "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "accounts": [
+        {
+          "name": "userVaultAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "by the signer, ensuring it has the correct ownership and permissions."
+          ]
+        },
+        {
+          "name": "userInteractionsCounter",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -78,6 +116,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "name",
+            "type": "string"
+          },
+          {
             "name": "totalDeposits",
             "type": "u64"
           },
@@ -90,6 +132,6 @@
     }
   ],
   "metadata": {
-    "address": "2QUW4EifLKjApSuTuSX26VmfnVdQHRDRkUt1HsfbouE8"
+    "address": "CG7Dq53EJdheZ4PKRe18CmXxsAdpxAGWCYK6hL7fem3b"
   }
 }

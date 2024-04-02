@@ -3,7 +3,7 @@ import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
-import { useTeamShadowProgram } from '../team-shadow/team-shadow-data-access';
+import { useTeamShadowProgram } from './copy-trading-data-access';
 import { useLeaderAccounts } from './copy-trading-data-access';
 
 
@@ -113,11 +113,11 @@ const leaders: Leader[] = [
 ]
 
 export function LeaderCardList(){
-  // const {data, isLoading} = useLeaderAccounts()
-  // console.log(data)
+  const {data, isLoading} = useLeaderAccounts()
+  console.log(data)
   
   return <div className="py-16">
-    {/* {isLoading? <>Loading...</>:  */}
+    {isLoading? <>Loading...</>: 
     <div className="flex flex-wrap justify-center gap-x-8 gap-y-12">
       {/* {data?.map(el => <li key={`${el.publicKey}`}>{el.publicKey?.toBase58()} 
         <li>
@@ -129,7 +129,7 @@ export function LeaderCardList(){
       </li>)} */}
       {leaders.map((el, i) => <LeaderCard key={`${i} ${el.name}`} {...el} />)}
     </div>
-    {/* } */}
+    }
   </div>
 }
 
@@ -336,7 +336,11 @@ export function ApplyLeadTrader() {
 
 
 export function ApplyLeadTraderButton(){
+  const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
+  const {initialize} = useTeamShadowProgram()
+
+  const handleApply = () => initialize.mutate({name, amount})
 
   return (
     <Dialog.Root>
@@ -376,6 +380,8 @@ export function ApplyLeadTraderButton(){
                     </label>
                     <input
                         type="text"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
                         required
                         className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-white border-gray-400 border-2 shadow-sm rounded-lg"
                     />
@@ -410,8 +416,9 @@ export function ApplyLeadTraderButton(){
                 </div>
                 <div>
                   <Dialog.Close asChild>
-                    <button
-                        className="w-full mt-2 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                    <button 
+                      onClick={handleApply}
+                      className="w-full mt-2 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                     >
                         Apply
                     </button>

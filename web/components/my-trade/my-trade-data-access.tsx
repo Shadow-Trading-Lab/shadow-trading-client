@@ -29,6 +29,33 @@ export function useTeamShadowProgram({
         queryFn: () => account? connection.getAccountInfo(account):null,
     })
 
+    const initialize = useMutation({
+        mutationKey: ['teamShadow', 'deposit', { cluster }],
+        mutationFn: async ({name, amount}:{name: string, amount: number}) => {
+            console.log(name, amount)
+            const tx = await program.methods
+                .initialize(name, new BN(amount * 10 ** 9))
+                .accounts({
+                    userVaultAccount: account,
+                    userInteractionsCounter: totalInteractionsAccount,
+                    signer: wallet.publicKey?.toBase58(),
+                    systemProgram: web3.SystemProgram.programId
+                })
+                .rpc()
+
+            console.log(tx)
+            return tx
+        },
+        onSuccess: (signature: string) => {
+            transactionToast(signature);
+            accountInfo.refetch();
+        },
+        onError: (msg) => {
+            console.error(msg)
+            toast.error('Failed to run program')
+        },
+    });
+
     const deposit = useMutation({
         mutationKey: ['teamShadow', 'deposit', { cluster }],
         mutationFn: async (amount: number) => {
@@ -85,6 +112,7 @@ export function useTeamShadowProgram({
         program,
         programId,
         accountInfo,
+        initialize,
         deposit,
         withdraw
     };

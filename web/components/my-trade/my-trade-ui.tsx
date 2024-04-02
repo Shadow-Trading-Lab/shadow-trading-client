@@ -30,10 +30,10 @@ export function LeaderTradeContent() {
 }
 
 export function CreateLeaderTradeVault({account}:{account: PublicKey | undefined}) {
-    const [amount, setAmount] = useState(0);
-    const {deposit} = useTeamShadowProgram({account})
+    const [amount, setAmount] = useState(10);
+    const {initialize} = useTeamShadowProgram({account})
     const handleCopyTrade = async () => {
-        await deposit.mutate(amount)
+        await initialize.mutate({name: 'Mike', amount})
     }
   
     return (
