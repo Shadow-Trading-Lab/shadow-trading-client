@@ -30,10 +30,10 @@ function CustomTabPanel(props: TabPanelProps) {
             <input type="number" className='input border-2 border-white my-2'/>
             <br/>
             <br/>
-            <h2 className='text-lg text-yellow-300 font-bold'>Expected return</h2>
+            <h2 className='text-xl text-yellow-300 font-bold'>Expected return</h2>
             {rules.map((rule, index) => (
                 <div key={index}>
-                    <p>VIP{index+1}：stake {rule.value} STL, increase {rule.reward}% profit sharing</p>
+                    <p className='text-lg'>VIP{index+1}：stake {rule.value} STL, increase {rule.reward}% profit sharing</p>
                 </div>
             ))}
           </Typography>
@@ -59,7 +59,7 @@ export function StakingTabs({setAction, setShowModal}: {setAction: (action: stri
   };
 
   return (
-    <Box sx={{ width: '100%' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
+    <Box sx={{ width: '28rem', mx:'auto' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Stake STL" {...a11yProps(0)} className='text-white text-xl' />

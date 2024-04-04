@@ -69,7 +69,7 @@ export function SwapTabs({setAction, setShowModal, price}: {setAction: (action: 
   };
 
   return (
-    <Box sx={{ width: '100%' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
+    <Box sx={{ width: '28rem', mx:'auto' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Buy STL" {...a11yProps(0)} className='text-white text-xl' />
