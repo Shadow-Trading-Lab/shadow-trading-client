@@ -21,10 +21,10 @@ export function LeaderCard({account}: {account: PublicKey}) {
         <div>
           <span className="text-xl text-white font-bold">{name}</span>
         </div>
-        <div>
+        <div className='flex justify-center'>
           <PnlChart />
         </div>
-        <div className="mt-6 pb-6 flex justify-between gap-16">
+        <div className="pb-6 flex justify-between gap-16">
           <div>
             <div>30 MDD</div>
             <div className="font-semibold text-white">{16.8} %</div>
@@ -48,17 +48,18 @@ export function LeaderCard({account}: {account: PublicKey}) {
 export function LeaderCardList(){
   const {accounts} = useTeamShadowProgram()
 
-  
-  return <div className="py-16">
-    {accounts.isLoading? <>Loading...</>: 
-    <div className="flex flex-wrap justify-center gap-x-8 gap-y-12">
-      {accounts.data?.map((el, i) => 
-        <LeaderCard 
-          key={el.publicKey.toString()} 
-          account={el.publicKey} />
-      )}
-    </div>}
-  </div>
+  return <>
+      {accounts.isLoading? <strong className='flex justify-center my-72 text-lg'>Loading . . .</strong>: 
+        accounts.data?.length===0? <strong className='flex justify-center my-72 text-lg'>No Leader</strong>: 
+        <div className=''>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {accounts.data?.map((el, i) => 
+              <LeaderCard 
+                key={el.publicKey.toString()} 
+                account={el.publicKey} />)}
+          </div>
+        </div>}
+    </>
 }
 
 export function PnlChart() {
@@ -75,8 +76,8 @@ const xLabels = [
 
   return (
     <ChartContainer
-      width={500}
-      height={300}
+      width={420}
+      height={240}
       series={[{ type: 'line', data: pData }]}
       xAxis={[{ scaleType: 'point', data: xLabels }]}
       sx={{
@@ -100,7 +101,7 @@ const xLabels = [
 }
 
 export function PageTitle(){
-  return <div className="max-w-lg px-8">
+  return <div className="max-w-lg">
   <h2 className="text-white-800 text-5xl font-bold">
     Lead Traders
   </h2>
@@ -208,7 +209,7 @@ export function CopyTrade({name}: {name: string}){
 export function SearchInput() {
   return <form
       onSubmit={(e) => e.preventDefault()} 
-      className="max-w-md px-4">
+      className="max-w-md">
       <div className="relative">
           <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
