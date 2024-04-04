@@ -26,9 +26,9 @@ function CustomTabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ py: 3, px: 2 }}>
+        <Box sx={{ py: 3, px: 2, width:'27rem' }}>
           <Typography>
-            <h1 className='text-2xl'>{value===0?'將從您的現貨帳戶扣款，將STL匯入您的錢包':'將STL換成USDT，匯入您的現貨錢包'}</h1>
+            <h1 className='text-xl'>{value===0?'將從您的現貨帳戶扣款，將STL匯入您的錢包':'將STL換成USDT，匯入您的現貨錢包'}</h1>
             <br/>
             <div className='flex mt-3 mb-5'>
                 <Image src={STLLogo} alt="STL Logo" className='mr-5' width={80} />

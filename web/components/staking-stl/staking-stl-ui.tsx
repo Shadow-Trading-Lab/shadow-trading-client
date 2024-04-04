@@ -59,7 +59,7 @@ export function StakingTabs({setAction, setShowModal}: {setAction: (action: stri
   };
 
   return (
-    <Box sx={{ width: '100%' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
+    <Box sx={{ width: '27rem' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="質押 STL" {...a11yProps(0)} className='text-white text-xl' />
