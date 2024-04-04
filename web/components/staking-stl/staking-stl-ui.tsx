@@ -26,14 +26,14 @@ function CustomTabPanel(props: TabPanelProps) {
       {value === index && (
         <Box sx={{ py: 3, px: 2, fontSize:'3rem' }}>
           <Typography>
-            <p>{value===0?'質押':'贖回'}數量</p>
+            <p>{value===0?'Stake':'Unstake'} amount</p>
             <input type="number" className='input border-2 border-white my-2'/>
             <br/>
             <br/>
-            <h2 className='text-lg text-yellow-300 font-bold'>預計獲得獎勵</h2>
+            <h2 className='text-lg text-yellow-300 font-bold'>Expected return</h2>
             {rules.map((rule, index) => (
                 <div key={index}>
-                    <p>VIP{index+1}：質押數量{rule.value}，增加跟單分潤抽成 {rule.reward}%</p>
+                    <p>VIP{index+1}：stake {rule.value} STL, increase {rule.reward}% profit sharing</p>
                 </div>
             ))}
           </Typography>
@@ -59,16 +59,18 @@ export function StakingTabs({setAction, setShowModal}: {setAction: (action: stri
   };
 
   return (
-    <Box sx={{ width: '27rem' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
+    <Box sx={{ width: '100%' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="質押 STL" {...a11yProps(0)} className='text-white text-xl' />
-          <Tab label="贖回 STL" {...a11yProps(1)} className='text-white text-xl' />
+          <Tab label="Stake STL" {...a11yProps(0)} className='text-white text-xl' />
+          <Tab label="Unstake STL" {...a11yProps(1)} className='text-white text-xl' />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0} />
       <CustomTabPanel value={value} index={1} />
-      <button className='btn btn-primary bg-yellow-200 text-xl w-full' onClick={()=>setShowModal(true)}>確認</button>
+      <button className='btn btn-primary bg-yellow-200 text-xl w-full' onClick={()=>{
+        setShowModal(true)
+      }}>Continue</button>
     </Box>
   );
 }

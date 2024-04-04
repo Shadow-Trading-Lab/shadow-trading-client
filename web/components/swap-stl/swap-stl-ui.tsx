@@ -23,26 +23,27 @@ function CustomTabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      className='w-96'
       {...other}
     >
       {value === index && (
-        <Box sx={{ py: 3, px: 2, width:'27rem' }}>
+        <Box sx={{ py: 3, px: 2, fontSize:'3rem' }}>
           <Typography>
-            <h1 className='text-xl'>{value===0?'將從您的現貨帳戶扣款，將STL匯入您的錢包':'將STL換成USDT，匯入您的現貨錢包'}</h1>
+            <h1 className='text-xl'>{value===0?'Withdraw USDC from your wallet and deposit STL in it':'Sell STL into USDC and deposit in your wallet'}</h1>
             <br/>
             <div className='flex mt-3 mb-5'>
                 <Image src={STLLogo} alt="STL Logo" className='mr-5' width={80} />
                 <div className='flex flex-col justify-center items-center'>
                     <span className='text-yellow-300'>STL</span>
-                    <span>Shadow 平台幣</span>
+                    <span>Shadow Platform Coin</span>
                 </div>
             </div>
             <div className='flex justify-between my-2'>
-                <span>價格</span>
-                <span>1 STL = {price} USDT</span>
+                <span>Price</span>
+                <span>1 STL = {price} USDC</span>
             </div>
             <div className='flex justify-between'>
-                <p className='flex items-center'>數量</p>
+                <p className='flex items-center'>Amount</p>
                 <input type="number" className='input border-2 border-white my-2'/>
             </div>
           </Typography>
@@ -71,13 +72,13 @@ export function SwapTabs({setAction, setShowModal, price}: {setAction: (action: 
     <Box sx={{ width: '100%' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="兌換 STL" {...a11yProps(0)} className='text-white text-xl' />
-          <Tab label="換回 USDT" {...a11yProps(1)} className='text-white text-xl' />
+          <Tab label="Buy STL" {...a11yProps(0)} className='text-white text-xl' />
+          <Tab label="Sell STL" {...a11yProps(1)} className='text-white text-xl' />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0} price={price} />
       <CustomTabPanel value={value} index={1} price={price} />
-      <button className='btn btn-primary bg-yellow-200 text-xl w-full' onClick={()=>setShowModal(true)}>確認</button>
+      <button className='btn btn-primary bg-yellow-200 text-xl w-full' onClick={()=>setShowModal(true)}>Continue</button>
     </Box>
   );
 }

@@ -8,7 +8,7 @@ const StakingSTLFeature = () => {
     const [showModal, setShowModal] = useState(false)
   return (
     <div className="px-4 pt-4 md:px-8">
-        {showModal&&<AlertSuccess msg={action==='staking'?"質押成功":"贖回成功"} setShowModal={setShowModal} />}
+        {showModal&&<AlertSuccess msg={action==='staking'?"stake successfully":"unstake successfully"} setShowModal={setShowModal} />}
         <StakingTabs setAction={setAction} setShowModal={setShowModal} />
     </div>
   )
