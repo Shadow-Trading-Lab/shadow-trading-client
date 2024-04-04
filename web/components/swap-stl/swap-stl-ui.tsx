@@ -1,88 +1,92 @@
 import * as React from 'react';
 import Image from 'next/image';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Container from '@mui/material/Container';
+import InputBase from '@mui/material/InputBase';
 import STLLogo from '@/public/STL-logo.png'
+import USDCLogo from '@/public/usdc-logo.png'
+import SwapArrow from '@/public/swap-arrow.png'
 import './swap-stl.css'
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-  price: number;
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, price, ...other } = props;
-
+export function CoinField({value, onChange, symbol}: {activeField: boolean, value: number, onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, symbol: string}) {
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      className='w-96'
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ py: 3, px: 2, fontSize:'3rem' }}>
-          <Typography>
-            <h1 className='text-xl'>{value===0?'Withdraw USDC from your wallet and deposit STL in it':'Sell STL into USDC and deposit in your wallet'}</h1>
-            <br/>
-            <div className='flex mt-3 mb-5'>
-                <Image src={STLLogo} alt="STL Logo" className='mr-5' width={80} />
-                <div className='flex flex-col justify-center items-center'>
-                    <span className='text-yellow-300'>STL</span>
-                    <span>Shadow Platform Coin</span>
-                </div>
-            </div>
-            <div className='flex justify-between my-2'>
-                <span>Price</span>
-                <span>1 STL = {price} USDC</span>
-            </div>
-            <div className='flex justify-between'>
-                <p className='flex items-center'>Amount</p>
-                <input type="number" className='input border-2 border-white my-2'/>
-            </div>
-          </Typography>
-        </Box>
-      )}
+    <div className='min-h-[80px] border-solid border-2 rounded text-right m-0'>
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        className='h-[5rem]'
+      >
+
+        {/* Text Field */}
+        <Grid item xs={6}>
+          <InputBase
+            type='number'
+            value={value}
+            onChange={(e) => onChange(e)}
+            placeholder="0"
+            className='w-full h-full text-white text-xl'
+            // classes={{ root: classes.input, input: classes.inputBase }}
+          />
+        </Grid>
+        {/* Button */}
+        <Grid item xs={3} className='flex items-center'>
+          <Image src={symbol==='USDC'?USDCLogo:STLLogo} alt="Coin Logo" width={50} />
+          <span className='mx-3'>{symbol}</span>
+        </Grid>
+      </Grid>
     </div>
-  );
+  )
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
+export function Uniswap({setAction, setShowModal, price}: {setAction: (action: string) => void, setShowModal: (show: boolean) => void, price: number}) {
+  const [coins, setCoins] = React.useState(['USDC','STL'])
+  const [amount,setAmount] = React.useState(0)
+
+  const switchFields = () => {
+    const temp = [coins[1],coins[0]]
+    setCoins(temp)
+  }
+  return(<Container className='w-[28rem] bg-slate-800'>
+        <Paper className='rounded p-2 bg-slate-800 text-white text-lg'>
+      <Typography variant="h5" className='text-center p-2 mb-2'>
+        Swap Coins
+      </Typography>
+
+      <Grid container direction="column" alignItems="center" spacing={2}>
+        <Grid item xs={12} className='w-full'>
+          <CoinField
+            activeField={true}
+            value={amount}
+            symbol={coins[0]}
+            onChange={(e) => setAmount(Number(e.target.value))}
+          />
+        </Grid>
+
+        <IconButton onClick={switchFields} className='z-10 p-1 mt-4'>
+          <Image src={SwapArrow} alt="Swap Icon" width={50} />
+        </IconButton>
+
+        <Grid item xs={12} className='w-full'>
+          <CoinField
+            activeField={false}
+            value={coins[0]==='USDC'?amount/price:amount*price}
+            symbol={coins[1]}
+            onChange={()=>null}
+          />
+        </Grid>
+      </Grid>
+        <button className='btn btn-primary bg-yellow-200 text-xl w-full my-4' 
+          onClick={()=>{setShowModal(true)}}>Swap
+        </button>
+    </Paper>
+  </Container>
+  )
 }
-
-export function SwapTabs({setAction, setShowModal, price}: {setAction: (action: string) => void, setShowModal: (show: boolean) => void, price: number}) {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-    setAction(newValue===0?'staking':'unstaking')
-  };
-
-  return (
-    <Box sx={{ width: '28rem', mx:'auto' }} className='text-white shadow-lg border-white border-2 rounded-lg p-2'>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Buy STL" {...a11yProps(0)} className='text-white text-xl' />
-          <Tab label="Sell STL" {...a11yProps(1)} className='text-white text-xl' />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0} price={price} />
-      <CustomTabPanel value={value} index={1} price={price} />
-      <button className='btn btn-primary bg-yellow-200 text-xl w-full' onClick={()=>setShowModal(true)}>Continue</button>
-    </Box>
-  );
-}
-
 
 export function AlertSuccess({msg, setShowModal}: {msg: string, setShowModal: (show: boolean) => void}) {
     return (

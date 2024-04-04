@@ -11,9 +11,14 @@ interface TabPanelProps {
   value: number;
 }
 
+interface StakingTabs {
+  setAction: (action: string) => void
+  setShowModal: (show: boolean) => void
+}
+
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-  const rules = [{value:10, reward: 1}, {value:100, reward: 2}, {value:500, reward: 5}]
+  const rules = [{value:10, followerReward: 85, traderReward: 4}, {value:100, followerReward: 87, traderReward: 8}, {value:500, followerReward: 90, traderReward: 11}]
 
   return (
     <div
@@ -30,10 +35,11 @@ function CustomTabPanel(props: TabPanelProps) {
             <input type="number" className='input border-2 border-white my-2'/>
             <br/>
             <br/>
-            <h2 className='text-xl text-yellow-300 font-bold'>Expected return</h2>
+            <h2 className='text-xl text-yellow-300 font-bold'>Profit sharing ( trader / follower )</h2>
             {rules.map((rule, index) => (
-                <div key={index}>
-                    <p className='text-lg'>VIP{index+1}：stake {rule.value} STL, increase {rule.reward}% profit sharing</p>
+                <div className='text-lg flex justify-between' key={index}>
+                    <p>VIP{index+1}</p>
+                    <p>{rule.traderReward}% / {rule.followerReward}%</p>
                 </div>
             ))}
           </Typography>
@@ -50,7 +56,7 @@ function a11yProps(index: number) {
   };
 }
 
-export function StakingTabs({setAction, setShowModal}: {setAction: (action: string) => void, setShowModal: (show: boolean) => void}) {
+export function StakingTabs({setAction, setShowModal}: StakingTabs) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -70,7 +76,7 @@ export function StakingTabs({setAction, setShowModal}: {setAction: (action: stri
       <CustomTabPanel value={value} index={1} />
       <button className='btn btn-primary bg-yellow-200 text-xl w-full' onClick={()=>{
         setShowModal(true)
-      }}>Continue</button>
+      }}>Stake</button>
     </Box>
   );
 }
