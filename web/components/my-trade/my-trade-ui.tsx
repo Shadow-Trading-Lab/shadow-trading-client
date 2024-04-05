@@ -13,7 +13,7 @@ export function TradeTabs() {
 
   const tabItems = [
     "Copy Trader",
-    "Lead Trader",
+    "My Lead",
   ];
 
   return (
