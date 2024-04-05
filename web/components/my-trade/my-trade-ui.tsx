@@ -1,14 +1,156 @@
 'use client'
 
+import Image from 'next/image'
 import {useState} from 'react'
 import * as Dialog from "@radix-ui/react-dialog";
 import { usePDA, useTeamShadowProgram } from './my-trade-data-access';
 import { PublicKey } from '@solana/web3.js';
+import * as Tabs from "@radix-ui/react-tabs";
 
 
-export function PageTitle() {
-    return <h2 className='dark:text-white text-4xl font-bold'>Overview</h2>
+export function TradeTabs() {
+  const [selectedTab, setSelectedTab] = useState("Copy Trader");
+
+  const tabItems = [
+    "Copy Trader",
+    "Lead Trader",
+  ];
+
+  return (
+    <Tabs.Root
+      className="max-w-screen-xl mt-2 mx-auto px-4 md:px-8"
+      value={selectedTab}
+      onValueChange={(val) => setSelectedTab(val)}
+    >
+      <Tabs.List
+        className="hidden gap-x-3 py-1 overflow-x-auto px-px text-sm sm:flex"
+        aria-label="Manage your account"
+      >
+        {tabItems.map((item, idx) => (
+          <Tabs.Trigger
+            key={idx}
+            className="data-[state=active]:bg-gray-100 data-[state=active]:text-gray-700 data-[state=active]:shadow-sm outline-gray-800 py-1.5 px-3 rounded-lg duration-150 text-gray-500 hover:text-gray-700 hover:bg-gray-100 active:bg-gray-100 font-medium"
+            value={item}
+          >
+            {item}
+          </Tabs.Trigger>
+        ))}
+      </Tabs.List>
+      <div className="relative text-gray-500 sm:hidden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="pointer-events-none w-5 h-5 absolute right-2 inset-y-0 my-auto"
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+            clipRule="evenodd"
+          />
+        </svg>
+        <select
+          value={selectedTab}
+          className="py-2 px-3 w-full bg-transparent appearance-none outline-none border rounded-lg shadow-sm focus:border-gray-800 text-sm"
+          onChange={(e) => setSelectedTab(e.target.value)}
+        >
+          {tabItems.map((item, idx) => (
+            <option key={idx}>
+              {item}
+            </option>
+          ))}
+        </select>
+      </div>
+      <Tabs.Content className="py-6 space-y-8" value={tabItems[0]}>
+          <div className="max-w-lg">
+            <h2 className="text-white-800 text-3xl font-bold">
+              Copy Trade Overview
+            </h2>
+          </div>
+          <div className='relative flex items-stretch p-8 rounded-xl border-2 border-gray-500'>
+            <div className='flex flex-col flex-auto'>
+              <p className='mb-3'>Wallet Balance</p>
+              <p><strong className='text-white text-xl'>118.6302</strong> USDT</p>
+            </div>
+            <div className='flex flex-col flex-auto'>
+              <p className='mb-3'>Follow Balance</p>
+              <p><strong className='text-white text-xl'>560.231</strong> USDT</p>
+            </div>
+            <div className='flex flex-col flex-auto'>
+              <p className='mb-3'>Unrealized PNL</p>
+              <p><strong className='text-green-400 text-xl'>+223.82</strong> USDT</p>
+            </div>
+            <div className='flex flex-col flex-auto'>
+              <p className='mb-3'>PNL</p>
+              <p><strong className='text-green-400 text-xl'>+980.11</strong> USDT</p>
+            </div>
+          </div>
+          <div className='relative flex-1 flex items-stretch flex-col gap-8 p-8 rounded-xl border-2 border-gray-500'>
+            <div className='flex items-stretch gap-3'>
+              <Image width={56} height={56} src="/pngegg.png" alt="" />
+              <p className='flex items-center text-white'><strong>Jungle</strong></p>
+              <div className='flex items-center ml-auto'>
+                <button className="px-4 py-2 text-white bg-indigo-600 rounded-lg duration-150 hover:bg-indigo-700 active:shadow-lg">
+                    Close Position
+                </button>
+              </div>
+            </div>
+            <div className="shadow-sm rounded-lg overflow-x-auto">
+                <table className="w-full table-auto text-sm text-left">
+                    <thead className="font-medium border-b">
+                        <tr>
+                            <th className="py-3 px-6">Symbol</th>
+                            <th className="py-3 px-6">Entry Price</th>
+                            <th className="py-3 px-6">Size</th>
+                            <th className="py-3 px-6">Unrealized PNL</th>
+                        </tr>
+                    </thead>
+                    <tbody className="text-white divide-y">
+                        {
+                            [
+                              {symbol: 'BTC / USDT', entryPrice: 60000, currentPrice: 70000, size: 1},
+                              {symbol: 'ETH / USDT', entryPrice: 3300, currentPrice: 3500, size: 10},
+                              {symbol: 'BNB / USDT', entryPrice: 200, currentPrice: 300, size: 100},
+                            ].map((item, idx) => (
+                                <tr key={idx}>
+                                    <td className="px-6 py-4 whitespace-nowrap">{item.symbol}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{item.entryPrice}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{item.size}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
+                                    <td className="text-right px-6 whitespace-nowrap">
+                                        <a href="javascript:void()" className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                            Swap
+                                        </a>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+          </div>
+      </Tabs.Content>
+       <Tabs.Content className="py-6" value={tabItems[1]}>
+          <div className="max-w-lg">
+            <h2 className="text-white-800 text-3xl font-bold">
+              Lead Trade Overview
+            </h2>
+          </div>
+      </Tabs.Content>
+    </Tabs.Root>
+  );
+};
+
+export function CopyTradeContent({value}:{value: string}) {
+  return <Tabs.Content className="py-6" value={value}>
+    <div className="max-w-lg">
+      <h2 className="text-white-800 text-3xl font-bold">
+        Copy Trade Overview
+      </h2>
+    </div>
+  </Tabs.Content>
 }
+
 
 export function LeaderTradeContent() {
   const userVaultAccount = usePDA("vault")
