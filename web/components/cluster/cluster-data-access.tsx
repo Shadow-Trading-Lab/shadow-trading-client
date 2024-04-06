@@ -29,6 +29,11 @@ export const defaultClusters: Cluster[] = [
     endpoint: clusterApiUrl('devnet'),
     network: ClusterNetwork.Devnet,
   },
+  {
+    name: 'devnet private',
+    endpoint: "https://purple-cool-dust.solana-devnet.quiknode.pro/5cd01a591208226412ccbf7024aa19f503bfe9e9/",
+    network: ClusterNetwork.Devnet,
+  },
   { name: 'local', endpoint: 'http://localhost:8899' },
   {
     name: 'testnet',

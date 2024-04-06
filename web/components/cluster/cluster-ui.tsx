@@ -140,6 +140,7 @@ export function ClusterUiModal({
         onChange={(e) => setNetwork(e.target.value as ClusterNetwork)}
       >
         <option value={undefined}>Select a network</option>
+        <option value={'https://purple-cool-dust.solana-devnet.quiknode.pro/5cd01a591208226412ccbf7024aa19f503bfe9e9/'}>Devnet private</option>
         <option value={ClusterNetwork.Devnet}>Devnet</option>
         <option value={ClusterNetwork.Testnet}>Testnet</option>
         <option value={ClusterNetwork.Mainnet}>Mainnet</option>
