@@ -15,7 +15,7 @@ import './swap-stl.css'
 
 export function CoinField({value, onChange, symbol}: {activeField: boolean, value: number, onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, symbol: string}) {
   return (
-    <div className='min-h-[80px] border-solid border-2 rounded text-right m-0'>
+    <div className='min-h-[80px] border-solid border-2 rounded-xl text-right m-0'>
       <Grid
         container
         direction="row"
@@ -26,13 +26,12 @@ export function CoinField({value, onChange, symbol}: {activeField: boolean, valu
 
         {/* Text Field */}
         <Grid item xs={6}>
-          <InputBase
+          <input
             type='number'
             value={value}
             onChange={(e) => onChange(e)}
             placeholder="0"
-            className='w-full h-full text-white text-xl'
-            // classes={{ root: classes.input, input: classes.inputBase }}
+            className='text-white text-2xl bg-slate-800 outline-none'
           />
         </Grid>
         {/* Button */}
@@ -117,5 +116,64 @@ export function AlertSuccess({msg, setShowModal}: {msg: string, setShowModal: (s
             </div>
         </div>
     )
+  }
+
+  export function UniswapCopy(
+    {
+      setAction,
+      setShowModal,
+      price
+    }:{
+      setAction: (action: string) => void,
+      setShowModal: (show: boolean) => void, price: number
+    }){
+      const [coins, setCoins] = React.useState(['USDC','STL'])
+      const [amount,setAmount] = React.useState(0)
+
+      const switchFields = () => {
+        const temp = [coins[1],coins[0]]
+        setCoins(temp)
+      }
+
+      const handleSwap = ()=>{
+        setShowModal(true)
+        setTimeout(() => setShowModal(false), 2000)
+      }
+      
+    return <div className="w-[640px] p-16 bg-gray-300 mx-auto dark:border-gray-800 dark:bg-gray-700 rounded-lg">
+      <div className='mb-8'>
+        <h3 className='text-3xl font-bold text-center'>Swap Coins</h3>
+      </div>
+      <div className='p-16 bg-slate-800 rounded-lg'>
+        <div>
+          <CoinField
+              activeField={true}
+              value={amount}
+              symbol={coins[0]}
+              onChange={(e) => setAmount(Number(e.target.value))}
+            />
+        </div>
+        <div 
+          className='flex jusitify-center items-center w-16 h-16 my-8 p-4 mx-auto bg-gray-500 hover:bg-gray-400 cursor-pointer rounded-full'
+          onClick={switchFields}>
+          <Image src={SwapArrow} alt="Swap Icon" width={50} />
+        </div>
+        <div className='mb-8'>
+          <CoinField
+              activeField={false}
+              value={coins[0]==='USDC'?amount/price:amount*price}
+              symbol={coins[1]}
+              onChange={()=>null}
+            />
+        </div>
+        <div>
+          <button 
+            className="w-full py-4 text-white duration-150 bg-indigo-600 rounded-lg hover:bg-indigo-700 active:shadow-lg"
+            onClick={handleSwap}>
+              Swap
+          </button>
+        </div>
+      </div>
+    </div>
   }
   

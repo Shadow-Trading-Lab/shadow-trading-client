@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react'
-import { AlertSuccess, Uniswap } from './swap-stl-ui';
+import { AlertSuccess, Uniswap, UniswapCopy } from './swap-stl-ui';
 
 const SwapSTLFeature = () => {
     const [action, setAction] = useState('swap' as string)
@@ -9,9 +9,10 @@ const SwapSTLFeature = () => {
     const [price, setPrice] = useState(100)
 
     return (
-        <div className="px-4 pt-4 md:px-8">
+        <div className="p-16 md:px-8 min-h-screen max-w-screen-xl mx-auto">
             {showModal&&<AlertSuccess msg={action==='swap'?"swap successfully":"unswap successfully"} setShowModal={setShowModal} />}
-            <Uniswap setAction={setAction} setShowModal={setShowModal} price={price} />
+            {/* <Uniswap setAction={setAction} setShowModal={setShowModal} price={price} /> */}
+            <UniswapCopy setAction={setAction} setShowModal={setShowModal} price={price} />
         </div>
     )
 }
