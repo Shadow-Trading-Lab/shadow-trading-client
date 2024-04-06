@@ -118,11 +118,6 @@ export function TradeTabs() {
                                     <td className="px-6 py-4 whitespace-nowrap">{item.entryPrice}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.amount}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
-                                    <td className="text-right px-6 whitespace-nowrap">
-                                        <a className="py-2 px-3 font-medium text-red-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
-                                            Swap
-                                        </a>
-                                    </td>
                                 </tr>
                             ))
                         }
@@ -282,11 +277,6 @@ export function LeadTradeTabs() {
                               <td className="px-6 py-4 whitespace-nowrap">{item.margin} USDC</td>
                               <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * item.size).toFixed(2)}</td>
                               <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
-                              <td className="text-right px-6 whitespace-nowrap">
-                                  <a className="py-2 px-3 font-medium text-red-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg cursor-pointer">
-                                      Swap
-                                  </a>
-                              </td>
                           </tr>
                       ))
                   }
