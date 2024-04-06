@@ -6,6 +6,8 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { usePDA, useTeamShadowProgram } from './my-trade-data-access';
 import { PublicKey } from '@solana/web3.js';
 import * as Tabs from "@radix-ui/react-tabs";
+import { ChartContainer } from '@mui/x-charts';
+import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 
 
 export function TradeTabs() {
@@ -18,7 +20,7 @@ export function TradeTabs() {
 
   return (
     <Tabs.Root
-      className="max-w-screen-xl mt-2 mx-auto px-4 md:px-8"
+      className="max-w-screen-xl mx-auto px-4 md:px-8"
       value={selectedTab}
       onValueChange={(val) => setSelectedTab(val)}
     >
@@ -130,97 +132,129 @@ export function TradeTabs() {
             </div>
           </div>
       </Tabs.Content>
-       <Tabs.Content className="py-6" value={tabItems[1]}>
+       <Tabs.Content className="py-6 space-y-8" value={tabItems[1]}>
           <div className="max-w-lg">
             <h2 className="text-white-800 text-3xl font-bold">
               Lead Trade Overview
             </h2>
           </div>
-          <div className='mt-16 space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-3'>
-                    {
-                        [
-                          {
-                              name: "Basic plan",
-                              price: 12,
-                              features: [
-                                  "Curabitur faucibus",
-                                  "massa ut pretium maximus",
-                                  "Sed posuere nisi",
-                                  "Pellentesque eu nibh et neque",
-                                  "Suspendisse a leo",
-                                  "Praesent quis venenatis ipsum",
-                                  "Duis non diam vel tortor",
-                  
-                              ],
-                          },
-                          {
-                              name: "Startup",
-                              price: 35,
-                              features: [
-                                  "Curabitur faucibus",
-                                  "massa ut pretium maximus",
-                                  "Sed posuere nisi",
-                                  "Pellentesque eu nibh et neque",
-                                  "Suspendisse a leo",
-                                  "Praesent quis venenatis ipsum",
-                                  "Duis non diam vel tortor",
-                              ],
-                          },
-                          {
-                              name: "Enterprise",
-                              price: 60,
-                              features: [
-                                  "Curabitur faucibus",
-                                  "massa ut pretium maximus",
-                                  "Sed posuere nisi",
-                                  "Pellentesque eu nibh et neque",
-                                  "Suspendisse a leo",
-                                  "Praesent quis venenatis ipsum",
-                                  "Duis non diam vel tortor",
-                              ],
-                          },
-                      ].map((item, idx) => (
-                            <div key={idx} className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2'>
-                                <div>
-                                    <span className='text-indigo-600 font-medium'>
-                                        {item.name}
-                                    </span>
-                                    <div className='mt-4 text-gray-800 text-3xl font-semibold'>
-                                        ${item.price} <span className="text-xl text-gray-600 font-normal">/mo</span>
-                                    </div>
-                                </div>
-                                <ul className='py-8 space-y-3'>
-                                    {
-                                        item.features.map((featureItem, idx) => (
-                                            <li key={idx} className='flex items-center gap-5'>
-                                                <svg
-                                                    xmlns='http://www.w3.org/2000/svg'
-                                                    className='h-5 w-5 text-indigo-600'
-                                                    viewBox='0 0 20 20'
-                                                    fill='currentColor'>
-                                                    <path
-                                                        fill-rule='evenodd'
-                                                        d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                                                        clip-rule='evenodd'></path>
-                                                </svg>
-                                                {featureItem}
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
-                                <div className="flex-1 flex items-end">
-                                    <button className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700'>
-                                        Get Started
-                                    </button>
-                                </div>
-                            </div>
-                        ))
-                    }
-                </div>
+          <div className='space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-3'>
+              <div className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2 border-gray-500'>
+                  <div>
+                      <span className='text-white text-xl font-bold'>
+                          My Lead Overview
+                      </span>
+                  </div>
+                  <ul className='py-8 space-y-3'>
+                      <li className='flex justify-between'>
+                          <span>Copier PnL</span>
+                          <span className='text-green-500'>+102.43 USDT</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>Unrealized Profit Sharing</span>
+                          <span className='text-green-500'>+10.2091</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>Profit Sharing</span>
+                          <span className='text-white'>10.00 %</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>Leading Margin Balance</span>
+                          <span className='text-white'>1,322.95 USDT</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>Minimum Copy Amount</span>
+                          <span className='text-white'>10/10 USDT</span>
+                      </li>
+                  </ul>
+              </div>
+              <div className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2 border-gray-500'>
+                  <div className='flex justify-between text-white'>
+                      <span className='text-xl font-bold'>
+                          Performance
+                      </span>
+                      <span>7 Days</span>
+                  </div>
+                  <ul className='py-8 space-y-3'>
+                      <li className='flex justify-between'>
+                          <span>ROI</span>
+                          <span className='text-green-500'>+21.53%</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>Sharpe Ratio</span>
+                          <span className='text-green-500'>2.22</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>MDD</span>
+                          <span className='text-white'>22.71%</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>Win Rate</span>
+                          <span className='text-white'>10.0%</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>Win Positions</span>
+                          <span className='text-white'>6</span>
+                      </li>
+                      <li className='flex justify-between'>
+                          <span>Total Positions</span>
+                          <span className='text-white'>10</span>
+                      </li>
+                  </ul>
+              </div>
+              <div className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2 border-gray-500'>
+                  <div className='flex justify-between text-white'>
+                      <span className='text-xl font-bold'>
+                          PnL
+                      </span>
+                      <span>7 Days</span>
+                  </div>
+                  <PnlChart />
+              </div>
+          </div>
       </Tabs.Content>
     </Tabs.Root>
   );
 };
+
+
+export function PnlChart() {
+  const pData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+const xLabels = [
+  'Page A',
+  'Page B',
+  'Page C',
+  'Page D',
+  'Page E',
+  'Page F',
+  'Page G',
+];
+
+  return (
+    <ChartContainer
+      width={300}
+      height={300}
+      series={[{ type: 'line', data: pData }]}
+      xAxis={[{ scaleType: 'point', data: xLabels }]}
+      sx={{
+        '.MuiLineElement-root': {
+          stroke: '#8884d8',
+          strokeWidth: 2,
+        },
+        '.MuiMarkElement-root': {
+          stroke: '#8884d8',
+          scale: '0.6',
+          fill: '#fff',
+          strokeWidth: 2,
+        },
+      }}
+      disableAxisListener
+    >
+      <LinePlot />
+      <MarkPlot />
+    </ChartContainer>
+  );
+}
 
 export function CopyTradeContent({value}:{value: string}) {
   return <Tabs.Content className="py-6" value={value}>
