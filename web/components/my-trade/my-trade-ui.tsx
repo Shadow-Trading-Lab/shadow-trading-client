@@ -14,8 +14,8 @@ export function TradeTabs() {
   const [selectedTab, setSelectedTab] = useState("Copy Trader");
 
   const tabItems = [
-    "Copy Trader",
     "My Lead",
+    "Copy Trader",
   ];
 
   return (
@@ -138,6 +138,15 @@ export function TradeTabs() {
               Lead Trade Overview
             </h2>
           </div>
+          <div className='flex items-stretch gap-3'>
+              <Image width={56} height={56} src="/pngegg.png" alt="" />
+              <p className='flex items-center text-white'><strong>Elmer</strong></p>
+              <div className='flex items-center ml-auto'>
+                <button className="px-4 py-2 text-white bg-indigo-600 rounded-lg duration-150 hover:bg-indigo-700 active:shadow-lg">
+                    Close
+                </button>
+              </div>
+            </div>
           <div className='space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-3'>
               <div className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2 border-gray-500'>
                   <div>
@@ -212,10 +221,191 @@ export function TradeTabs() {
                   <PnlChart />
               </div>
           </div>
+          <LeadTradeTabs />
+          
       </Tabs.Content>
     </Tabs.Root>
   );
 };
+
+export function LeadTradeTabs() {
+  const tabItems = [
+    "Positions",
+    "Position history",
+    "Copy Traders",
+    "Transfer History",
+  ];
+
+  return <Tabs.Root
+    className="max-w-screen-xl mx-auto"
+    defaultValue="Overview"
+  >
+    <Tabs.List
+      className="w-full border-b flex items-center gap-x-3 overflow-x-auto text-lg"
+      aria-label="Manage your account"
+    >
+      {tabItems.map((item, idx) => (
+        <Tabs.Trigger
+          key={idx}
+          className="group outline-none py-1.5 text-gray-500 data-[state=active]:border-white data-[state=active]:text-white"
+          value={item}
+        >
+          <div className="py-1.5 px-3 rounded-lg duration-150 group-hover:text-gray-500 group-hover:bg-gray-50 group-active:bg-gray-100 font-medium">
+            {item}
+          </div>
+        </Tabs.Trigger>
+      ))}
+    </Tabs.List>
+    <Tabs.Content className="py-6" value={tabItems[0]}>
+        <div className="shadow-sm rounded-lg overflow-x-auto px-8">
+            <table className="w-full table-auto text-sm text-left">
+                <thead className="font-medium border-b">
+                    <tr>
+                        <th className="py-3 px-6">Symbol</th>
+                        <th className="py-3 px-6">Entry Price</th>
+                        <th className="py-3 px-6">Size</th>
+                        <th className="py-3 px-6">Unrealized PNL</th>
+                    </tr>
+                </thead>
+                <tbody className="text-white divide-y">
+                    {
+                        [
+                          {symbol: 'DOGEUSDT', entryPrice: 0.16122, currentPrice: 0.17992, amount: 305},
+                          {symbol: 'SHIBUSDT', entryPrice: 0.00000289, currentPrice: 0.00000674, amount: 26489},
+                        ].map((item, idx) => (
+                            <tr key={idx}>
+                                <td className="px-6 py-4 whitespace-nowrap">{item.symbol}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{item.entryPrice}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{item.amount}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
+                                <td className="text-right px-6 whitespace-nowrap">
+                                    <a className="py-2 px-3 font-medium text-red-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                        Swap
+                                    </a>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+    </Tabs.Content>
+    <Tabs.Content className="py-6" value={tabItems[1]}>
+      <div>
+         <div className='px-8 py-4 hover:bg-gray-700'>
+            <div className='flex justify-between mb-1'>
+              <div>
+                <span className='text-white'>ETCUSDT Perpetual </span>
+                <span className='text-gray-400'> Isolated </span>
+                <span className='text-green-500'> Long</span>
+              </div>
+              <div>
+                <span className='text-gray-400'> Closed</span>
+              </div>
+            </div>
+            <div className='flex justify-between'>
+              <div>
+                <div>
+                  <span className='text-gray-400'>Opened</span>
+                  <span className='text-white'> 2024-02-23 02:34:45 </span>
+                </div>
+                <div>
+                  <span className='text-gray-400'>Closed</span>
+                  <span className='text-white'> 2024-02-26 23:07:26 </span>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <span className='text-gray-400'>Entry Price</span>
+                  <span className='text-white'> 25.989 USDT </span>
+                </div>
+                <div>
+                  <span className='text-gray-400'>Avg. Close</span>
+                  <span className='text-white'> Price27.286 USDT </span>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <span className='text-gray-400'>Max. Open Interest</span>
+                  <span className='text-white'> 3.84 ETC </span>
+                </div>
+                <div>
+                  <span className='text-gray-400'>Closed Vol.</span>
+                  <span className='text-white'>3.84 ETC </span>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <span className='text-gray-400'>Closing PNL</span>
+                </div>
+                <div>
+                  <span className='text-green-500'>+4.98 USDT</span>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div className='px-8 py-4 hover:bg-gray-700'>
+          <div className='flex justify-between mb-1'>
+              <div>
+                <span className='text-white'>UNIUSDT Perpetual </span>
+                <span className='text-gray-400'> Isolated </span>
+                <span className='text-green-500'> Long</span>
+              </div>
+              <div>
+                <span className='text-gray-400'> Closed</span>
+              </div>
+            </div>
+              <div className='flex justify-between'>
+                <div>
+                  <div>
+                    <span className='text-gray-400'>Opened</span>
+                    <span className='text-white'> 2024-02-23 02:32:59 </span>
+                  </div>
+                  <div>
+                    <span className='text-gray-400'>Closed</span>
+                    <span className='text-white'> 2024-02-26 23:09:31 </span>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <span className='text-gray-400'>Entry Price</span>
+                    <span className='text-white'> 7.4230 USDT </span>
+                  </div>
+                  <div>
+                    <span className='text-gray-400'>Avg. Close Price</span>
+                    <span className='text-white'> 10.8260 USDT </span>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <span className='text-gray-400'>Max. Open Interest</span>
+                    <span className='text-white'> 13 UNI </span>
+                  </div>
+                  <div>
+                    <span className='text-gray-400'>Closed Vol.</span>
+                    <span className='text-white'> 13 UNI </span>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <span className='text-gray-400'>Closing PNL</span>
+                  </div>
+                  <div>
+                    <span className='text-green-500'>+44.24 USDT</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+    </Tabs.Content>
+    <Tabs.Content className="py-6" value={tabItems[2]}>
+      <p className="text-xs leading-normal">
+        This is <b>C</b> Tab
+      </p>
+    </Tabs.Content>
+  </Tabs.Root>
+}
 
 
 export function PnlChart() {
