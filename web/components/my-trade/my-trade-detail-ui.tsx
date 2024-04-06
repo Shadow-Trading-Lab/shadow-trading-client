@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import {useState} from 'react'
 import * as Dialog from "@radix-ui/react-dialog";
-import { usePDA, useTeamShadowProgram } from './my-trade-data-access';
+import { usePDA, useTeamShadowProgram } from './my-trade-detail-data-access';
 import { PublicKey } from '@solana/web3.js';
 import * as Tabs from "@radix-ui/react-tabs";
 import { ChartContainer } from '@mui/x-charts';
