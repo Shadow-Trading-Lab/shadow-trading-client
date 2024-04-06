@@ -99,7 +99,7 @@ export function TradeTabs() {
                 <table className="w-full table-auto text-sm text-left">
                     <thead className="font-medium border-b">
                         <tr>
-                            <th className="py-3 px-6">Symbol</th>
+                            <th className="py-3 px-6">Coin</th>
                             <th className="py-3 px-6">Entry Price</th>
                             <th className="py-3 px-6">Size</th>
                             <th className="py-3 px-6">Unrealized PNL</th>
@@ -108,17 +108,17 @@ export function TradeTabs() {
                     <tbody className="text-white divide-y">
                         {
                             [
-                              {symbol: 'BTC / USDT', entryPrice: 60000, currentPrice: 70000, size: 1},
-                              {symbol: 'ETH / USDT', entryPrice: 3300, currentPrice: 3500, size: 10},
-                              {symbol: 'BNB / USDT', entryPrice: 200, currentPrice: 300, size: 100},
+                              {coin: 'BTC', entryPrice: 60000, currentPrice: 70000, amount: 1},
+                              {coin: 'ETH', entryPrice: 3300, currentPrice: 3500, amount: 10},
+                              {coin: 'BNB', entryPrice: 200, currentPrice: 300, amount: 100},
                             ].map((item, idx) => (
                                 <tr key={idx}>
-                                    <td className="px-6 py-4 whitespace-nowrap">{item.symbol}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{item.coin}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.entryPrice}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{item.size}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{item.amount}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
                                     <td className="text-right px-6 whitespace-nowrap">
-                                        <a href="javascript:void()" className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                        <a href="javascript:void()" className="py-2 px-3 font-medium text-red-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
                                             Swap
                                         </a>
                                     </td>
@@ -136,6 +136,87 @@ export function TradeTabs() {
               Lead Trade Overview
             </h2>
           </div>
+          <div className='mt-16 space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-3'>
+                    {
+                        [
+                          {
+                              name: "Basic plan",
+                              price: 12,
+                              features: [
+                                  "Curabitur faucibus",
+                                  "massa ut pretium maximus",
+                                  "Sed posuere nisi",
+                                  "Pellentesque eu nibh et neque",
+                                  "Suspendisse a leo",
+                                  "Praesent quis venenatis ipsum",
+                                  "Duis non diam vel tortor",
+                  
+                              ],
+                          },
+                          {
+                              name: "Startup",
+                              price: 35,
+                              features: [
+                                  "Curabitur faucibus",
+                                  "massa ut pretium maximus",
+                                  "Sed posuere nisi",
+                                  "Pellentesque eu nibh et neque",
+                                  "Suspendisse a leo",
+                                  "Praesent quis venenatis ipsum",
+                                  "Duis non diam vel tortor",
+                              ],
+                          },
+                          {
+                              name: "Enterprise",
+                              price: 60,
+                              features: [
+                                  "Curabitur faucibus",
+                                  "massa ut pretium maximus",
+                                  "Sed posuere nisi",
+                                  "Pellentesque eu nibh et neque",
+                                  "Suspendisse a leo",
+                                  "Praesent quis venenatis ipsum",
+                                  "Duis non diam vel tortor",
+                              ],
+                          },
+                      ].map((item, idx) => (
+                            <div key={idx} className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2'>
+                                <div>
+                                    <span className='text-indigo-600 font-medium'>
+                                        {item.name}
+                                    </span>
+                                    <div className='mt-4 text-gray-800 text-3xl font-semibold'>
+                                        ${item.price} <span className="text-xl text-gray-600 font-normal">/mo</span>
+                                    </div>
+                                </div>
+                                <ul className='py-8 space-y-3'>
+                                    {
+                                        item.features.map((featureItem, idx) => (
+                                            <li key={idx} className='flex items-center gap-5'>
+                                                <svg
+                                                    xmlns='http://www.w3.org/2000/svg'
+                                                    className='h-5 w-5 text-indigo-600'
+                                                    viewBox='0 0 20 20'
+                                                    fill='currentColor'>
+                                                    <path
+                                                        fill-rule='evenodd'
+                                                        d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+                                                        clip-rule='evenodd'></path>
+                                                </svg>
+                                                {featureItem}
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                                <div className="flex-1 flex items-end">
+                                    <button className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700'>
+                                        Get Started
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
       </Tabs.Content>
     </Tabs.Root>
   );
