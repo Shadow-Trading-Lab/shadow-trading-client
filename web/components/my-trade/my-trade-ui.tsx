@@ -14,8 +14,15 @@ export function TradeTabs() {
   const [selectedTab, setSelectedTab] = useState("Copy Trader");
 
   const tabItems = [
-    "My Lead",
     "Copy Trader",
+    "My Lead",
+  ];
+
+  const subTabItems = [
+    "Positions",
+    "Position history",
+    "Copy Traders",
+    "Transfer History",
   ];
 
   return (
@@ -221,30 +228,31 @@ export function TradeTabs() {
                   <PnlChart />
               </div>
           </div>
-          <LeadTradeTabs />
-          
+          <div className='p-8 rounded-xl border-2 border-gray-500'>
+              <LeadTradeTabs />
+          </div>
       </Tabs.Content>
     </Tabs.Root>
   );
 };
 
 export function LeadTradeTabs() {
-  const tabItems = [
+  const subTabItems = [
     "Positions",
     "Position history",
-    "Copy Traders",
     "Transfer History",
+    "Copy Traders",
   ];
 
   return <Tabs.Root
     className="max-w-screen-xl mx-auto"
-    defaultValue="Overview"
+    defaultValue="Positions"
   >
     <Tabs.List
-      className="w-full border-b flex items-center gap-x-3 overflow-x-auto text-lg"
+      className="w-full flex items-center gap-x-3 overflow-x-auto text-lg"
       aria-label="Manage your account"
     >
-      {tabItems.map((item, idx) => (
+      {subTabItems.map((item, idx) => (
         <Tabs.Trigger
           key={idx}
           className="group outline-none py-1.5 text-gray-500 data-[state=active]:border-white data-[state=active]:text-white"
@@ -256,41 +264,45 @@ export function LeadTradeTabs() {
         </Tabs.Trigger>
       ))}
     </Tabs.List>
-    <Tabs.Content className="py-6" value={tabItems[0]}>
-        <div className="shadow-sm rounded-lg overflow-x-auto px-8">
-            <table className="w-full table-auto text-sm text-left">
-                <thead className="font-medium border-b">
-                    <tr>
-                        <th className="py-3 px-6">Symbol</th>
-                        <th className="py-3 px-6">Entry Price</th>
-                        <th className="py-3 px-6">Size</th>
-                        <th className="py-3 px-6">Unrealized PNL</th>
-                    </tr>
-                </thead>
-                <tbody className="text-white divide-y">
-                    {
-                        [
-                          {symbol: 'DOGEUSDT', entryPrice: 0.16122, currentPrice: 0.17992, amount: 305},
-                          {symbol: 'SHIBUSDT', entryPrice: 0.00000289, currentPrice: 0.00000674, amount: 26489},
-                        ].map((item, idx) => (
-                            <tr key={idx}>
-                                <td className="px-6 py-4 whitespace-nowrap">{item.symbol}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{item.entryPrice}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{item.amount}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
-                                <td className="text-right px-6 whitespace-nowrap">
-                                    <a className="py-2 px-3 font-medium text-red-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
-                                        Swap
-                                    </a>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
+    <Tabs.Content className="py-6" value={subTabItems[0]}>
+      <div className="shadow-sm rounded-lg overflow-x-auto px-8">
+          <table className="w-full table-auto text-sm text-left">
+              <thead className="font-medium border-b">
+                  <tr>
+                      <th className="py-3 px-6">Symbol</th>
+                      <th className="py-3 px-6">Size</th>
+                      <th className="py-3 px-6">Entry Price</th>
+                      <th className="py-3 px-6">Margin</th>
+                      <th className="py-3 px-6">Unrealized PNL</th>
+                      <th className="py-3 px-6">ROI</th>
+                  </tr>
+              </thead>
+              <tbody className="text-white divide-y">
+                  {
+                      [
+                        {symbol: 'DOGEUSDT', entryPrice: 0.16122, currentPrice: 0.17992, size: 305, margin: 67.23},
+                        {symbol: 'SHIBUSDT', entryPrice: 0.00000289, currentPrice: 0.00000674, size: 26489, margin: 184.62},
+                      ].map((item, idx) => (
+                          <tr key={idx}>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.symbol}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.size}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.entryPrice}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.margin} USDT</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * item.size).toFixed(2)}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
+                              <td className="text-right px-6 whitespace-nowrap">
+                                  <a className="py-2 px-3 font-medium text-red-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg cursor-pointer">
+                                      Swap
+                                  </a>
+                              </td>
+                          </tr>
+                      ))
+                  }
+              </tbody>
+          </table>
+      </div>
     </Tabs.Content>
-    <Tabs.Content className="py-6" value={tabItems[1]}>
+    <Tabs.Content className="py-6" value={subTabItems[1]}>
       <div>
          <div className='px-8 py-4 hover:bg-gray-700'>
             <div className='flex justify-between mb-1'>
@@ -399,10 +411,35 @@ export function LeadTradeTabs() {
             </div>
       </div>
     </Tabs.Content>
-    <Tabs.Content className="py-6" value={tabItems[2]}>
-      <p className="text-xs leading-normal">
-        This is <b>C</b> Tab
-      </p>
+    <Tabs.Content className="py-6" value={subTabItems[3]}>
+        <div className="shadow-sm rounded-lg overflow-x-auto px-8">
+          <table className="w-full table-auto text-sm text-left">
+              <thead className="font-medium border-b">
+                  <tr>
+                      <th className="py-3 px-6">User ID</th>
+                      <th className="py-3 px-6">Copy Margin Balance</th>
+                      <th className="py-3 px-6">Total PNL</th>
+                      <th className="py-3 px-6">Total ROI</th>
+                      <th className="py-3 px-6">Duration</th>
+                  </tr>
+              </thead>
+              <tbody className="text-white divide-y">
+                  {
+                      [
+                        {userId: 'Ano**************eba', copyMarginBalance: '1,805.52 USDT', totalPNL: '194.48 USDT', totalROI: '9.73%', duration: '31 Days'},
+                      ].map((item, idx) => (
+                          <tr key={idx}>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.userId}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.copyMarginBalance}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.totalPNL}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.totalROI}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.duration}</td>
+                          </tr>
+                      ))
+                  }
+              </tbody>
+          </table>
+      </div>
     </Tabs.Content>
   </Tabs.Root>
 }
