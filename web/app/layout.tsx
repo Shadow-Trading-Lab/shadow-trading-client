@@ -19,7 +19,7 @@ const links: linkType[] = [
   { label: 'Account', path: '/account' },
   // { label: 'Clusters', path: '/clusters' },
   // { label: 'TeamShadow Program', path: '/team-shadow' },
-  { label: 'Copy Trading', path: '/copy-trading' },
+  { label: 'Portfolios', path: '/copy-trading' },
   { label: 'My Trade', path: '/my-trade' },
   { label: 'Staking STL', path: '/staking-stl' },
   { label: 'Swap STL', path: '/swap-stl' },

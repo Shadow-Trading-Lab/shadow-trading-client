@@ -39,7 +39,7 @@ export function LeaderCard({account}: {account: PublicKey}) {
           </div>
         </div>
         <div className="w-full">
-          {name && <CopyTrade name={'name'} />}
+          <CopyTrade />
         </div>
     </div>
   </div>
@@ -118,7 +118,7 @@ export function BeATraderButton(){
   </div>
 }
 
-export function CopyTrade({name}: {name: string}){
+export function CopyTrade(){
   const [amount, setAmount] = useState<number>(0);
 
   return (
@@ -129,10 +129,10 @@ export function CopyTrade({name}: {name: string}){
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 w-full h-full bg-black opacity-40" />
         <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-xl mx-auto px-4">
-          <div className="rounded-md shadow-lg px-4 py-6 bg-white border border-gray-200 dark:border-gray-800 dark:bg-gray-700">
+          <div className="rounded-md shadow-lg px-4 py-8 bg-white border border-gray-200 dark:border-gray-800 dark:bg-gray-700">
             <div className="flex items-center justify-between">
               <Dialog.Title className="text-2xl mb-5 font-medium text-gray-800 dark:text-white">
-                Copy {name}
+                Follow Portfolio
               </Dialog.Title>
               <Dialog.Close className="p-2 text-gray-400 rounded-md hover:bg-gray-100">
                 <svg
@@ -169,17 +169,17 @@ export function CopyTrade({name}: {name: string}){
                   />
                   <div className="absolute inset-y-0 right-3 flex items-center">
                       <select className="text-sm bg-transparent outline-none px-1 rounded-lg h-full">
-                          <option>USDT</option>
+                          <option>USDC</option>
                       </select>
                   </div>        
                 </div>  
               </div>
-              <div>
+              {/* <div>
                 <div className="flex items-center space-x-2 mb-4">
                     <input id="default-checkbox" type="checkbox" required className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                     <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium dark:text-gray-300">Agree to a revenue sharing rate of 10%</label>
                 </div>
-              </div>
+              </div> */}
               <div>
                 <div className="flex items-center space-x-2 mb-4">
                     <input id="default-checkbox" type="checkbox" required className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />

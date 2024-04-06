@@ -11,10 +11,10 @@ import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 
 
 export function TradeTabs() {
-  const [selectedTab, setSelectedTab] = useState("Copy Trader");
+  const [selectedTab, setSelectedTab] = useState("Follow Trades");
 
   const tabItems = [
-    "Copy Trader",
+    "Follow Trades",
     "My Lead",
   ];
 
@@ -72,19 +72,19 @@ export function TradeTabs() {
           <div className='relative flex items-stretch p-8 rounded-xl border-2 border-gray-500'>
             <div className='flex flex-col flex-auto'>
               <p className='mb-3'>Wallet Balance</p>
-              <p><strong className='text-white text-xl'>118.6302</strong> USDT</p>
+              <p><strong className='text-white text-xl'>118.6302</strong> USDC</p>
             </div>
             <div className='flex flex-col flex-auto'>
               <p className='mb-3'>Follow Balance</p>
-              <p><strong className='text-white text-xl'>560.231</strong> USDT</p>
+              <p><strong className='text-white text-xl'>560.231</strong> USDC</p>
             </div>
             <div className='flex flex-col flex-auto'>
               <p className='mb-3'>Unrealized PNL</p>
-              <p><strong className='text-green-400 text-xl'>+223.82</strong> USDT</p>
+              <p><strong className='text-green-400 text-xl'>+223.82</strong> USDC</p>
             </div>
             <div className='flex flex-col flex-auto'>
-              <p className='mb-3'>PNL</p>
-              <p><strong className='text-green-400 text-xl'>+980.11</strong> USDT</p>
+              <p className='mb-3'>Margin Balance</p>
+              <p><strong className='text-green-400 text-xl'>678.8612</strong> USDC</p>
             </div>
           </div>
           <div className='relative flex-1 flex items-stretch flex-col gap-8 p-8 rounded-xl border-2 border-gray-500'>
@@ -100,7 +100,7 @@ export function TradeTabs() {
                 <table className="w-full table-auto text-sm text-left">
                     <thead className="font-medium border-b">
                         <tr>
-                            <th className="py-3 px-6">Coin</th>
+                            <th className="py-3 px-6">PERP</th>
                             <th className="py-3 px-6">Entry Price</th>
                             <th className="py-3 px-6">Size</th>
                             <th className="py-3 px-6">Unrealized PNL</th>
@@ -109,17 +109,17 @@ export function TradeTabs() {
                     <tbody className="text-white divide-y">
                         {
                             [
-                              {coin: 'BTC', entryPrice: 60000, currentPrice: 70000, amount: 1},
-                              {coin: 'ETH', entryPrice: 3300, currentPrice: 3500, amount: 10},
-                              {coin: 'BNB', entryPrice: 200, currentPrice: 300, amount: 100},
+                              {perp: 'BTC', entryPrice: 60000, currentPrice: 70000, amount: 1},
+                              {perp: 'ETH', entryPrice: 3300, currentPrice: 3500, amount: 10},
+                              {perp: 'BNB', entryPrice: 200, currentPrice: 300, amount: 100},
                             ].map((item, idx) => (
                                 <tr key={idx}>
-                                    <td className="px-6 py-4 whitespace-nowrap">{item.coin}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{item.perp}-PERP</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.entryPrice}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.amount}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
                                     <td className="text-right px-6 whitespace-nowrap">
-                                        <a href="javascript:void()" className="py-2 px-3 font-medium text-red-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                        <a className="py-2 px-3 font-medium text-red-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">
                                             Swap
                                         </a>
                                     </td>
@@ -156,7 +156,7 @@ export function TradeTabs() {
                   <ul className='py-8 space-y-3'>
                       <li className='flex justify-between'>
                           <span>Copier PnL</span>
-                          <span className='text-green-500'>+102.43 USDT</span>
+                          <span className='text-green-500'>+102.43 USDC</span>
                       </li>
                       <li className='flex justify-between'>
                           <span>Unrealized Profit Sharing</span>
@@ -168,11 +168,11 @@ export function TradeTabs() {
                       </li>
                       <li className='flex justify-between'>
                           <span>Leading Margin Balance</span>
-                          <span className='text-white'>1,322.95 USDT</span>
+                          <span className='text-white'>1,322.95 USDC</span>
                       </li>
                       <li className='flex justify-between'>
                           <span>Minimum Copy Amount</span>
-                          <span className='text-white'>10/10 USDT</span>
+                          <span className='text-white'>10/10 USDC</span>
                       </li>
                   </ul>
               </div>
@@ -272,14 +272,14 @@ export function LeadTradeTabs() {
               <tbody className="text-white divide-y">
                   {
                       [
-                        {symbol: 'DOGEUSDT', entryPrice: 0.16122, currentPrice: 0.17992, size: 305, margin: 67.23},
-                        {symbol: 'SHIBUSDT', entryPrice: 0.00000289, currentPrice: 0.00000674, size: 26489, margin: 184.62},
+                        {symbol: 'DOGE-PERP', entryPrice: 0.16122, currentPrice: 0.17992, size: 305, margin: 67.23},
+                        {symbol: 'SHIB-PERP', entryPrice: 0.00000289, currentPrice: 0.00000674, size: 26489, margin: 184.62},
                       ].map((item, idx) => (
                           <tr key={idx}>
                               <td className="px-6 py-4 whitespace-nowrap">{item.symbol}</td>
                               <td className="px-6 py-4 whitespace-nowrap">{item.size}</td>
                               <td className="px-6 py-4 whitespace-nowrap">{item.entryPrice}</td>
-                              <td className="px-6 py-4 whitespace-nowrap">{item.margin} USDT</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{item.margin} USDC</td>
                               <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * item.size).toFixed(2)}</td>
                               <td className="px-6 py-4 whitespace-nowrap">{((item.currentPrice / item.entryPrice - 1) * 100).toFixed(2)} %</td>
                               <td className="text-right px-6 whitespace-nowrap">
@@ -299,7 +299,7 @@ export function LeadTradeTabs() {
          <div className='px-8 py-4 hover:bg-gray-700'>
             <div className='flex justify-between mb-1'>
               <div>
-                <span className='text-white'>ETCUSDT Perpetual </span>
+                <span className='text-white'>ETCUSDC Perpetual </span>
                 <span className='text-gray-400'> Isolated </span>
                 <span className='text-green-500'> Long</span>
               </div>
@@ -321,11 +321,11 @@ export function LeadTradeTabs() {
               <div>
                 <div>
                   <span className='text-gray-400'>Entry Price</span>
-                  <span className='text-white'> 25.989 USDT </span>
+                  <span className='text-white'> 25.989 USDC </span>
                 </div>
                 <div>
                   <span className='text-gray-400'>Avg. Close</span>
-                  <span className='text-white'> Price27.286 USDT </span>
+                  <span className='text-white'> Price27.286 USDC </span>
                 </div>
               </div>
               <div>
@@ -343,7 +343,7 @@ export function LeadTradeTabs() {
                   <span className='text-gray-400'>Closing PNL</span>
                 </div>
                 <div>
-                  <span className='text-green-500'>+4.98 USDT</span>
+                  <span className='text-green-500'>+4.98 USDC</span>
                 </div>
               </div>
             </div>
@@ -352,7 +352,7 @@ export function LeadTradeTabs() {
           <div className='px-8 py-4 hover:bg-gray-700'>
           <div className='flex justify-between mb-1'>
               <div>
-                <span className='text-white'>UNIUSDT Perpetual </span>
+                <span className='text-white'>UNIUSDC Perpetual </span>
                 <span className='text-gray-400'> Isolated </span>
                 <span className='text-green-500'> Long</span>
               </div>
@@ -374,11 +374,11 @@ export function LeadTradeTabs() {
                 <div>
                   <div>
                     <span className='text-gray-400'>Entry Price</span>
-                    <span className='text-white'> 7.4230 USDT </span>
+                    <span className='text-white'> 7.4230 USDC </span>
                   </div>
                   <div>
                     <span className='text-gray-400'>Avg. Close Price</span>
-                    <span className='text-white'> 10.8260 USDT </span>
+                    <span className='text-white'> 10.8260 USDC </span>
                   </div>
                 </div>
                 <div>
@@ -396,7 +396,7 @@ export function LeadTradeTabs() {
                     <span className='text-gray-400'>Closing PNL</span>
                   </div>
                   <div>
-                    <span className='text-green-500'>+44.24 USDT</span>
+                    <span className='text-green-500'>+44.24 USDC</span>
                   </div>
                 </div>
               </div>
@@ -418,7 +418,7 @@ export function LeadTradeTabs() {
               <tbody className="text-white divide-y">
                   {
                       [
-                        {userId: 'Ano**************eba', copyMarginBalance: '1,805.52 USDT', totalPNL: '194.48 USDT', totalROI: '9.73%', duration: '31 Days'},
+                        {userId: 'Ano**************eba', copyMarginBalance: '1,805.52 USDC', totalPNL: '194.48 USDC', totalROI: '9.73%', duration: '31 Days'},
                       ].map((item, idx) => (
                           <tr key={idx}>
                               <td className="px-6 py-4 whitespace-nowrap">{item.userId}</td>
@@ -473,7 +473,7 @@ export function AdjustBalanceButton() {
           </div>
           <Dialog.Description className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500">
             <p>
-              Your copy trading account has transferred USDT (copy trading currency) to your spot account
+              Your copy trading account has transferred USDC (copy trading currency) to your spot account
             </p>
             <Tabs.Root
               className="max-w-screen-xl py-4 mx-auto"
@@ -531,7 +531,7 @@ export function AdjustBalanceButton() {
                     />
                     <div className="absolute inset-y-0 right-3 flex items-center">
                         <select className="text-sm bg-transparent outline-none px-1 rounded-lg h-full">
-                            <option>USDT</option>
+                            <option>USDC</option>
                         </select>
                     </div>
                 </div>
@@ -548,7 +548,7 @@ export function AdjustBalanceButton() {
                   />
                   <div className="absolute inset-y-0 right-3 flex items-center">
                       <select className="text-sm bg-transparent outline-none px-1 rounded-lg h-full">
-                          <option>USDT</option>
+                          <option>USDC</option>
                       </select>
                   </div>
               </div>
