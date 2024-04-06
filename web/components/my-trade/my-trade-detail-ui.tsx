@@ -18,13 +18,6 @@ export function TradeTabs() {
     "My Lead",
   ];
 
-  const subTabItems = [
-    "Positions",
-    "Position history",
-    "Copy Traders",
-    "Transfer History",
-  ];
-
   return (
     <Tabs.Root
       className="max-w-screen-xl mx-auto px-4 md:px-8"
@@ -98,10 +91,9 @@ export function TradeTabs() {
             <div className='flex items-stretch gap-3'>
               <Image width={56} height={56} src="/pngegg.png" alt="" />
               <p className='flex items-center text-white'><strong>Jungle</strong></p>
-              <div className='flex items-center ml-auto'>
-                <button className="px-4 py-2 text-white bg-indigo-600 rounded-lg duration-150 hover:bg-indigo-700 active:shadow-lg">
-                    Close Position
-                </button>
+              <div className='flex items-center gap-3 ml-auto'>
+                <AdjustBalanceButton />
+                <ClosePositionButton />
               </div>
             </div>
             <div className="shadow-sm rounded-lg overflow-x-auto">
@@ -443,6 +435,203 @@ export function LeadTradeTabs() {
     </Tabs.Content>
   </Tabs.Root>
 }
+
+export function AdjustBalanceButton() {
+  const [selectedTab, setSelectedTab] = useState("Add");
+
+  const tabItems = [
+    "Add",
+    "Remove",
+  ];
+
+  return <Dialog.Root>
+    <Dialog.Trigger className="px-4 py-2 text-white bg-sky-600 rounded-lg duration-150 hover:bg-sky-700 active:shadow-lg">
+      Adjust Balance
+    </Dialog.Trigger>
+    <Dialog.Portal>
+      <Dialog.Overlay className="fixed inset-0 w-full h-full bg-black opacity-40" />
+      <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-lg mx-auto px-4">
+        <div className="bg-white rounded-md shadow-lg dark:bg-gray-800">
+          <div className="flex items-center justify-between p-4 border-b">
+            <Dialog.Title className="text-xl font-medium text-gray-800 dark:text-white">
+              Adjust Balance
+            </Dialog.Title>
+            <Dialog.Close className="p-2 text-gray-400 rounded-md hover:bg-gray-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5 mx-auto"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </Dialog.Close>
+          </div>
+          <Dialog.Description className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500">
+            <p>
+              Your copy trading account has transferred USDT (copy trading currency) to your spot account
+            </p>
+            <Tabs.Root
+              className="max-w-screen-xl py-4 mx-auto"
+              value={selectedTab}
+              onValueChange={(val) => setSelectedTab(val)}
+            >
+              <Tabs.List
+                className="hidden gap-x-3 py-1 overflow-x-auto px-px text-sm sm:flex"
+                aria-label="Manage your account"
+              >
+                {tabItems.map((item, idx) => (
+                  <Tabs.Trigger
+                    key={idx}
+                    className="data-[state=active]:bg-gray-100 data-[state=active]:text-gray-700 data-[state=active]:shadow-sm outline-gray-800 py-1.5 px-3 rounded-lg duration-150 text-gray-500 hover:text-gray-700 hover:bg-gray-100 active:bg-gray-100 font-medium"
+                    value={item}
+                  >
+                    {item}
+                  </Tabs.Trigger>
+                ))}
+              </Tabs.List>
+              <div className="relative text-gray-500 sm:hidden">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="pointer-events-none w-5 h-5 absolute right-2 inset-y-0 my-auto"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <select
+                  value={selectedTab}
+                  className="py-2 px-3 w-full bg-transparent appearance-none outline-none border rounded-lg shadow-sm focus:border-gray-800 text-sm"
+                  onChange={(e) => setSelectedTab(e.target.value)}
+                >
+                  {tabItems.map((item, idx) => (
+                    <option key={idx}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <Tabs.Content className="" value={tabItems[0]}>
+                <div className="relative mt-2 max-w-xs text-gray-500">
+                    <span className="h-6 text-gray-400 absolute left-3 inset-y-0 my-auto">
+                        &#x24;
+                    </span>
+                    <input
+                        type="number"
+                        placeholder="0.00"
+                        className="w-full pl-8 pr-16 py-2 appearance-none bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                    />
+                    <div className="absolute inset-y-0 right-3 flex items-center">
+                        <select className="text-sm bg-transparent outline-none px-1 rounded-lg h-full">
+                            <option>USDT</option>
+                        </select>
+                    </div>
+                </div>
+              </Tabs.Content>
+              <Tabs.Content className="" value={tabItems[1]}>
+                <div className="relative mt-2 max-w-xs text-gray-500">
+                  <span className="h-6 text-gray-400 absolute left-3 inset-y-0 my-auto">
+                      &#x24;
+                  </span>
+                  <input
+                      type="number"
+                      placeholder="0.00"
+                      className="w-full pl-8 pr-16 py-2 appearance-none bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                  />
+                  <div className="absolute inset-y-0 right-3 flex items-center">
+                      <select className="text-sm bg-transparent outline-none px-1 rounded-lg h-full">
+                          <option>USDT</option>
+                      </select>
+                  </div>
+              </div>
+              </Tabs.Content>
+            </Tabs.Root>
+          </Dialog.Description>
+          <div className="flex items-center gap-3 p-4 border-t">
+            <Dialog.Close asChild>
+              <button className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2 ">
+                Confirm
+              </button>
+            </Dialog.Close>
+            <Dialog.Close asChild>
+              <button
+                className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2 dark:text-gray-300"
+                aria-label="Close"
+              >
+                Cancel
+              </button>
+            </Dialog.Close>
+          </div>
+        </div>
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>
+}
+
+
+export function ClosePositionButton() {
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger className="px-4 py-2 text-white bg-indigo-600 rounded-lg duration-150 hover:bg-indigo-700 active:shadow-lg">
+        Close Position
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 w-full h-full bg-black opacity-40" />
+        <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] px-4 w-full max-w-lg">
+          <div className="bg-white rounded-md shadow-lg px-4 py-6 sm:flex dark:bg-gray-800">
+            <div className="flex items-center justify-center flex-none w-12 h-12 mx-auto bg-red-100 rounded-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5 text-red-600"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className="mt-2 text-center sm:ml-4 sm:text-left">
+              <Dialog.Title className="text-lg font-xl text-gray-800 dark:text-white">
+                Closing All Positions
+              </Dialog.Title>
+              <Dialog.Description className="mt-2 text-sm leading-relaxed text-gray-500">
+                <p>The system will close all positions of the following strategy</p>
+                <p>All funds will be automatically returned to your spot wallet.</p>
+              </Dialog.Description>
+              <div className="items-center gap-2 mt-3 text-sm sm:flex">
+                <Dialog.Close asChild>
+                  <button className="w-full mt-2 p-2.5 flex-1 text-white bg-red-600 rounded-md ring-offset-2 ring-red-600 focus:ring-2">
+                    Confirm
+                  </button>
+                </Dialog.Close>
+                <Dialog.Close asChild>
+                  <button
+                    aria-label="Close"
+                    className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md border ring-offset-2 ring-indigo-600 focus:ring-2 dark:text-gray-300"
+                  >
+                    Cancel
+                  </button>
+                </Dialog.Close>
+              </div>
+            </div>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+};
+
 
 
 export function PnlChart() {
